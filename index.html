@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ============ SEO ============ -->
+  <title>Valley Fleet Wraps | Commercial Fleet Wraps in Deer Valley &amp; North Phoenix</title>
+  <meta name="description" content="Commercial fleet wraps, service van graphics, truck wraps, and fleet branding for Deer Valley, North Phoenix, and Phoenix-area service businesses. Get a free Fleet Visibility Audit.">
+  <meta name="keywords" content="fleet wraps Deer Valley, commercial vehicle wraps North Phoenix, service van wraps Phoenix, contractor vehicle wraps Phoenix, HVAC fleet wraps Phoenix, plumbing van wraps Phoenix, truck wraps Deer Valley, fleet graphics Phoenix">
+  <meta property="og:title" content="Valley Fleet Wraps | Commercial Fleet Wraps in Deer Valley &amp; North Phoenix">
+  <meta property="og:description" content="Your trucks should make the phone ring. Fleet wraps for Arizona service companies that want to look bigger, cleaner, and easier to remember.">
+  <meta property="og:type" content="website">
+  <!-- TODO: Add og:image once brand photography exists, e.g. <meta property="og:image" content="/assets/img/og-fleet.jpg"> -->
+  <link rel="canonical" href="https://valleyfleetwraps.com/"> <!-- TODO: replace with live domain -->
+
+  <!-- Local business structured data for local SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Valley Fleet Wraps",
+    "description": "Commercial fleet wraps, service van graphics, truck wraps, and fleet branding for Deer Valley, North Phoenix, and Phoenix-area service businesses.",
+    "areaServed": ["Deer Valley", "North Phoenix", "Glendale", "Peoria", "Scottsdale Airpark", "Cave Creek", "North Scottsdale", "Phoenix"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Phoenix",
+      "addressRegion": "AZ",
+      "addressCountry": "US"
+    },
+    "telephone": "+1-602-000-0000",
+    "priceRange": "$$"
+  }
+  </script>
+
+  <!-- Simple VF favicon (replace with a real .ico/.png when brand assets exist) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23d9702e'/%3E%3Ctext x='16' y='22' font-family='Arial Narrow,sans-serif' font-size='15' font-weight='800' fill='%23fff' text-anchor='middle'%3EVF%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts are self-hosted (Barlow Condensed + Inter) — see @font-face in css/styles.css -->
+  <link rel="preload" href="assets/fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Fixed WebGL canvas: desert-road scene rendered by js/scene.js (three.js).
+       Visible behind the hero and final CTA; solid sections cover it mid-page. -->
+  <canvas id="scene-canvas" aria-hidden="true"></canvas>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand" aria-label="Valley Fleet Wraps — home">
+        <span class="brand-mark" aria-hidden="true">VF</span>
+        <span class="brand-name">Valley <strong>Fleet Wraps</strong></span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="#audit">Free Audit</a>
+        <a href="#services">Services</a>
+        <a href="#industries">Industries</a>
+        <a href="#packages">Packages</a>
+        <a href="#process">Process</a>
+        <a href="#service-area">Service Area</a>
+        <a href="#faq">FAQs</a>
+        <a href="#contact" class="btn btn-primary btn-sm nav-cta">Get a Free Fleet Visibility Audit</a>
+      </nav>
+
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow" data-hero-item>Commercial Fleet Wraps · Deer Valley &amp; North Phoenix</p>
+          <h1 data-hero-item>Your Trucks Should Make the <span class="accent">Phone Ring.</span></h1>
+          <p class="hero-sub" data-hero-item>Commercial fleet wraps for Deer Valley, North Phoenix, and Valley service businesses that want to look bigger, cleaner, and easier to remember.</p>
+
+          <div class="hero-ctas" data-hero-item>
+            <a href="#contact" class="btn btn-primary btn-lg">Get a Free Fleet Visibility Audit</a>
+            <a href="#services" class="btn btn-ghost btn-lg">View Fleet Wrap Services</a>
+          </div>
+
+          <ul class="hero-points" data-hero-item>
+            <li>Built for service trucks, vans, trailers, and work fleets</li>
+            <li>Designed for readability on the road</li>
+            <li>Fleet branding for HVAC, plumbing, electrical, pest, pool, and contractor businesses</li>
+            <li>Serving Deer Valley and North Phoenix</li>
+          </ul>
+        </div>
+
+        <!-- Stylized wrapped-van mockup. Replace with real fleet photography when available:
+             swap this figure for <img src="assets/img/hero-van.jpg" alt="Wrapped HVAC service van in North Phoenix"> -->
+        <figure class="hero-van" data-hero-van aria-label="Mockup of a wrapped service van with large phone number and service category">
+          <div class="van-card">
+            <svg viewBox="0 0 560 300" class="van-svg" role="img" aria-labelledby="vanTitle">
+              <title id="vanTitle">Stylized wrapped service van mockup</title>
+              <!-- van body -->
+              <path d="M40 210 L40 120 Q40 100 60 100 L330 100 Q345 100 355 110 L420 110 Q450 110 470 135 L505 175 Q515 185 515 200 L515 210 Q515 222 503 222 L52 222 Q40 222 40 210 Z" fill="#e8e4dc"/>
+              <!-- wrap swoosh -->
+              <path d="M40 210 L40 168 Q170 138 330 162 Q440 178 515 200 L515 210 Q515 222 503 222 L52 222 Q40 222 40 210 Z" fill="#d9702e"/>
+              <path d="M40 176 Q170 146 330 170 Q440 186 515 204 L515 196 Q440 172 330 156 Q170 132 40 162 Z" fill="#10263f"/>
+              <!-- windows -->
+              <path d="M362 116 L418 116 Q442 116 458 136 L482 164 L370 164 Q362 164 362 156 Z" fill="#22384f"/>
+              <!-- wrap lettering -->
+              <text x="70" y="140" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="30" font-weight="800" fill="#10263f" letter-spacing="1">YOUR COMPANY HVAC</text>
+              <text x="70" y="200" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="34" font-weight="800" fill="#fdf7ef" letter-spacing="2">(602) 555-0148</text>
+              <!-- wheels -->
+              <circle cx="130" cy="222" r="30" fill="#0b1622"/><circle cx="130" cy="222" r="13" fill="#8a94a0"/>
+              <circle cx="430" cy="222" r="30" fill="#0b1622"/><circle cx="430" cy="222" r="13" fill="#8a94a0"/>
+              <!-- ground -->
+              <rect x="10" y="250" width="540" height="3" rx="1.5" fill="#d9702e" opacity="0.5"/>
+            </svg>
+            <figcaption class="van-caption">Readable from across the intersection — that's the standard.</figcaption>
+          </div>
+        </figure>
+      </div>
+
+      <a href="#problem" class="scroll-hint" aria-label="Scroll to next section">
+        <span class="scroll-hint-line" aria-hidden="true"></span> Scroll
+      </a>
+    </section>
+
+    <!-- ================= THE PROBLEM ================= -->
+    <section class="section section-dark" id="problem">
+      <div class="container narrow">
+        <p class="eyebrow" data-reveal>The Problem</p>
+        <h2 data-reveal>Most fleet wraps are too busy, too small, or too forgettable.</h2>
+        <p class="lead" data-reveal>Your vehicles are seen every day by homeowners, drivers, neighbors, and potential customers. If your service category, phone number, and brand are hard to read, your fleet is leaving attention and trust on the table.</p>
+
+        <ul class="check-questions" data-reveal-group>
+          <li>Can people read your phone number from a distance?</li>
+          <li>Is your service category obvious in three seconds?</li>
+          <li>Does every vehicle in your fleet look consistent?</li>
+          <li>Do your trucks look professional when parked at a customer's home?</li>
+          <li>Does your fleet make your business look established?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= THE SOLUTION ================= -->
+    <section class="section section-sand" id="solution">
+      <div class="container">
+        <div class="section-head narrow">
+          <p class="eyebrow" data-reveal>The Solution</p>
+          <h2 data-reveal>Fleet wraps designed like business assets — not decoration.</h2>
+          <p class="lead" data-reveal>Valley Fleet Wraps helps service companies turn plain or inconsistent vehicles into clear, professional, lead-generating fleet advertising.</p>
+        </div>
+
+        <div class="card-grid three" data-reveal-group>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 5C6 5 2 12 2 12s4 7 10 7 10-7 10-7-4-7-10-7zm0 11a4 4 0 110-8 4 4 0 010 8z"/></svg>
+            </div>
+            <h3>Readable at a glance</h3>
+            <p>Big service category, clear phone number, strong contrast, and layouts designed for real traffic.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h7v7H4zM13 5h7v7h-7zM4 14h7v7H4zM13 14h7v7h-7z"/></svg>
+            </div>
+            <h3>Consistent across the fleet</h3>
+            <p>Vans, trucks, trailers, and new vehicles all follow one clean brand system.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3zm-1.2 13.6l6-6-1.4-1.4-4.6 4.6-2.2-2.2-1.4 1.4 3.6 3.6z"/></svg>
+            </div>
+            <h3>Built for local trust</h3>
+            <p>Show up to homes and job sites looking established, professional, and easy to remember.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FREE AUDIT ================= -->
+    <section class="section section-navy" id="audit">
+      <div class="container audit-grid">
+        <div class="audit-copy">
+          <p class="eyebrow" data-reveal>Free · No Pressure · Practical</p>
+          <h2 data-reveal>Get a Free Fleet Visibility Audit</h2>
+          <p class="lead" data-reveal>Send us photos of your current vehicles and we'll review how your fleet looks from a customer's point of view. You'll get practical recommendations for improving readability, consistency, and visual impact.</p>
+          <a href="#contact" class="btn btn-primary btn-lg" data-reveal>Start My Free Audit</a>
+        </div>
+
+        <div class="audit-checklist card card-outline" data-reveal>
+          <h3>Every audit covers:</h3>
+          <ul class="checklist">
+            <li>Phone number readability</li>
+            <li>Service category clarity</li>
+            <li>Brand consistency</li>
+            <li>Side, rear, and parked-vehicle visibility</li>
+            <li>Wrap level recommendation</li>
+            <li>Suggested next step for 1 vehicle or the whole fleet</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= INDUSTRIES ================= -->
+    <section class="section section-sand" id="industries">
+      <div class="container">
+        <div class="section-head narrow">
+          <p class="eyebrow" data-reveal>Industries Served</p>
+          <h2 data-reveal>Built for the businesses Deer Valley sees every day.</h2>
+          <p class="lead" data-reveal>Contractor vehicle wraps and fleet graphics for the trades that keep Phoenix running.</p>
+        </div>
+
+        <div class="card-grid industries-grid" data-reveal-group>
+          <article class="card industry-card">
+            <span class="badge">HVAC</span>
+            <h3>HVAC Fleet Wraps</h3>
+            <p>Summer in Phoenix means your vans are everywhere — make every driveway visit a billboard for the next AC call.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Plumbing</span>
+            <h3>Plumbing Van Wraps</h3>
+            <p>Homeowners call the plumber they remember seeing on their street. A clear van makes you that plumber.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Electrical</span>
+            <h3>Electrical Contractor Wraps</h3>
+            <p>A professional fleet signals licensed, insured, and safe — exactly what customers want from an electrician.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Pest Control</span>
+            <h3>Pest Control Vehicle Wraps</h3>
+            <p>Route-based work puts you in the same neighborhoods weekly — consistent branding compounds every pass.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Pool Service</span>
+            <h3>Pool Service Truck Wraps</h3>
+            <p>Your truck sits in front of pool homes all day. Neighbors with pools are your next customers.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Garage Door</span>
+            <h3>Garage Door Company Wraps</h3>
+            <p>Emergency calls go to the name people can recall — a readable truck keeps you top of mind.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Roofing</span>
+            <h3>Roofing &amp; Restoration Wraps</h3>
+            <p>After a storm, every truck on the block is competing. A trustworthy fleet wins the knock on the door.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Solar</span>
+            <h3>Solar Installer Fleet Wraps</h3>
+            <p>Solar is a big-ticket decision — a polished fleet builds the credibility the sale depends on.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Landscaping</span>
+            <h3>Landscaping Truck &amp; Trailer Graphics</h3>
+            <p>Trucks and trailers parked curbside are seen by every neighbor — turn parked time into advertising time.</p>
+          </article>
+          <article class="card industry-card">
+            <span class="badge">Mobile Service</span>
+            <h3>Mobile Service Vehicle Wraps</h3>
+            <p>If your business drives to the customer, your vehicle is your storefront — make it easy to read and remember.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section section-light" id="services">
+      <div class="container">
+        <div class="section-head narrow">
+          <p class="eyebrow" data-reveal>Fleet Wrap Services</p>
+          <h2 data-reveal>Commercial vehicle graphics for every stage of your fleet.</h2>
+          <p class="lead" data-reveal>From a single service van wrap to a full truck and trailer branding system across Greater Phoenix.</p>
+        </div>
+
+        <div class="card-grid three" data-reveal-group>
+          <article class="card service-card">
+            <span class="service-num" aria-hidden="true">01</span>
+            <h3>Full Vehicle Wraps</h3>
+            <p>For maximum visibility and a bold brand presence.</p>
+          </article>
+          <article class="card service-card">
+            <span class="service-num" aria-hidden="true">02</span>
+            <h3>Partial Wraps</h3>
+            <p>A high-impact option for service fleets that want a professional look without wrapping every inch.</p>
+          </article>
+          <article class="card service-card">
+            <span class="service-num" aria-hidden="true">03</span>
+            <h3>Fleet Graphics &amp; Lettering</h3>
+            <p>Logos, phone numbers, unit numbers, license info, service areas, and clean brand systems.</p>
+          </article>
+          <article class="card service-card">
+            <span class="service-num" aria-hidden="true">04</span>
+            <h3>Box Truck &amp; Trailer Graphics</h3>
+            <p>Large-format branding for delivery, logistics, trades, and mobile service companies.</p>
+          </article>
+          <article class="card service-card">
+            <span class="service-num" aria-hidden="true">05</span>
+            <h3>Fleet Refresh Packages</h3>
+            <p>Update old, inconsistent, faded, or hard-to-read vehicle graphics.</p>
+          </article>
+          <article class="card service-card">
+            <span class="service-num" aria-hidden="true">06</span>
+            <h3>New Vehicle Onboarding</h3>
+            <p>Get every new truck, van, or trailer brand-ready before it hits the road.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PACKAGES ================= -->
+    <section class="section section-dark" id="packages">
+      <div class="container">
+        <div class="section-head narrow">
+          <p class="eyebrow" data-reveal>Packages</p>
+          <h2 data-reveal>Simple fleet wrap packages. Built to grow with you.</h2>
+          <p class="lead" data-reveal>Custom quoted based on vehicle type, wrap coverage, and fleet size — no surprise line items.</p>
+        </div>
+
+        <div class="card-grid packages-grid" data-reveal-group>
+          <article class="card package-card">
+            <span class="badge badge-outline">1–2 vehicles</span>
+            <h3>Starter Fleet</h3>
+            <p>Get your first trucks working for you.</p>
+            <ul class="checklist">
+              <li>Logo placement</li>
+              <li>Phone number &amp; website</li>
+              <li>Basic service listing</li>
+              <li>Clean vehicle lettering</li>
+            </ul>
+            <a href="#contact" class="btn btn-ghost-dark package-cta" data-need="starter">Request Starter Pricing</a>
+          </article>
+
+          <article class="card package-card package-featured">
+            <span class="badge">3–10 vehicles · Most Popular</span>
+            <h3>Neighborhood Dominator</h3>
+            <p>Own the streets your competitors drive.</p>
+            <ul class="checklist">
+              <li>Partial wrap system</li>
+              <li>High-visibility layout</li>
+              <li>Consistent fleet branding</li>
+              <li>Templates for future vehicles</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary package-cta" data-need="dominator">Build My Fleet System</a>
+          </article>
+
+          <article class="card package-card">
+            <span class="badge badge-outline">10+ vehicles</span>
+            <h3>Market Leader Fleet</h3>
+            <p>A complete brand system for serious fleets.</p>
+            <ul class="checklist">
+              <li>Full fleet branding system</li>
+              <li>Rollout plan &amp; vehicle templates</li>
+              <li>Unit numbers &amp; reprint-ready files</li>
+              <li>Priority scheduling</li>
+            </ul>
+            <a href="#contact" class="btn btn-ghost-dark package-cta" data-need="market-leader">Plan My Fleet Rollout</a>
+          </article>
+
+          <article class="card package-card">
+            <span class="badge badge-outline">Existing fleets</span>
+            <h3>Fleet Refresh</h3>
+            <p>For businesses with old or inconsistent graphics.</p>
+            <ul class="checklist">
+              <li>Fleet audit</li>
+              <li>Redesign recommendations</li>
+              <li>Decal replacement</li>
+              <li>Phased update plan</li>
+            </ul>
+            <a href="#contact" class="btn btn-ghost-dark package-cta" data-need="refresh">Refresh My Fleet</a>
+          </article>
+        </div>
+
+        <p class="fine-print" data-reveal>Every package is custom quoted based on vehicle type, wrap coverage, and fleet size.</p>
+      </div>
+    </section>
+
+    <!-- ================= WHY DEER VALLEY / SERVICE AREA ================= -->
+    <section class="section section-sand" id="service-area">
+      <div class="container area-grid">
+        <div>
+          <p class="eyebrow" data-reveal>Why Deer Valley / North Phoenix</p>
+          <h2 data-reveal>Local fleet branding for North Phoenix service businesses.</h2>
+          <p class="lead" data-reveal>Valley Fleet Wraps is built for the companies driving the I-17, Loop 101, Deer Valley Road, Bell Road, Pinnacle Peak, Scottsdale Airpark, Glendale, Peoria, and North Phoenix service routes every day. If your trucks live on these roads, we design for these roads — real traffic speeds, real viewing distances, real Arizona sun.</p>
+        </div>
+        <div class="card card-outline area-card" data-reveal>
+          <h3>Service Area</h3>
+          <ul class="area-list">
+            <li>Deer Valley</li>
+            <li>North Phoenix</li>
+            <li>Glendale</li>
+            <li>Peoria</li>
+            <li>Scottsdale Airpark</li>
+            <li>Cave Creek</li>
+            <li>North Scottsdale</li>
+            <li>Goodyear / West Valley fleet projects by request</li>
+            <li>Greater Phoenix</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BEFORE / AFTER ================= -->
+    <section class="section section-light" id="before-after">
+      <div class="container">
+        <div class="section-head narrow">
+          <p class="eyebrow" data-reveal>Before &amp; After</p>
+          <h2 data-reveal>See the difference a clearer fleet can make.</h2>
+        </div>
+
+        <!-- IMAGE PLACEHOLDERS: replace each .ba-placeholder div with real before/after
+             photos, e.g. <img src="assets/img/before-hvac.jpg" alt="Plain white van before wrap">. -->
+        <div class="card-grid three" data-reveal-group>
+          <article class="card ba-card">
+            <div class="ba-pair">
+              <div class="ba-placeholder ba-before"><span>BEFORE</span><small>Photo: plain white van</small></div>
+              <div class="ba-placeholder ba-after"><span>AFTER</span><small>Photo: branded HVAC van</small></div>
+            </div>
+            <h3>Plain white van → branded HVAC van</h3>
+            <p>From invisible to the most recognizable AC company on the block.</p>
+          </article>
+          <article class="card ba-card">
+            <div class="ba-pair">
+              <div class="ba-placeholder ba-before"><span>BEFORE</span><small>Photo: small door decal truck</small></div>
+              <div class="ba-placeholder ba-after"><span>AFTER</span><small>Photo: bold plumbing partial wrap</small></div>
+            </div>
+            <h3>Small door decal → bold plumbing partial wrap</h3>
+            <p>A phone number readable from three lanes over, not three feet away.</p>
+          </article>
+          <article class="card ba-card">
+            <div class="ba-pair">
+              <div class="ba-placeholder ba-before"><span>BEFORE</span><small>Photo: mismatched fleet</small></div>
+              <div class="ba-placeholder ba-after"><span>AFTER</span><small>Photo: unified fleet system</small></div>
+            </div>
+            <h3>Inconsistent fleet → unified service fleet system</h3>
+            <p>Five vehicles that finally look like one established company.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROCESS ================= -->
+    <section class="section section-navy" id="process">
+      <div class="container narrow">
+        <p class="eyebrow" data-reveal>Process</p>
+        <h2 data-reveal>A simple process for busy business owners.</h2>
+
+        <ol class="process-steps" data-reveal-group>
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div>
+              <h3>Send vehicle photos</h3>
+              <p>Upload or email photos of your current vehicles.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div>
+              <h3>Get a fleet visibility audit</h3>
+              <p>We review readability, consistency, and brand impact.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div>
+              <h3>Approve your design direction</h3>
+              <p>Choose the wrap level and layout that fits your business.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">4</span>
+            <div>
+              <h3>Schedule install</h3>
+              <p>We coordinate around your fleet availability.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">5</span>
+            <div>
+              <h3>Hit the road looking sharper</h3>
+              <p>Your vehicles become cleaner, more consistent, and easier to remember.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="section-cta" data-reveal>
+          <a href="#contact" class="btn btn-primary btn-lg">Get a Free Fleet Visibility Audit</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section-sand" id="faq">
+      <div class="container narrow">
+        <p class="eyebrow" data-reveal>FAQs</p>
+        <h2 data-reveal>Straight answers for business owners.</h2>
+
+        <div class="faq-list" data-reveal-group>
+          <details class="faq-item">
+            <summary>How much does a commercial fleet wrap cost?</summary>
+            <p>It depends on vehicle type, wrap coverage, and fleet size. Lettering packages cost less than partial wraps, and partial wraps cost less than full wraps. Send photos of your vehicles and we'll give you a clear quote — no obligation.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do I need a full wrap or partial wrap?</summary>
+            <p>Not every fleet needs full coverage. Many service businesses get excellent results from a well-designed partial wrap or lettering system. Your free audit includes a recommendation based on your vehicles and budget.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can you match our existing brand?</summary>
+            <p>Yes. We work from your logo, colors, and any brand guidelines you have. If your brand needs cleanup to work well at vehicle scale, we'll tell you exactly what to adjust.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can you wrap one vehicle first and the rest later?</summary>
+            <p>Yes, and we recommend it for many fleets. We build your layout as a template, so every future vehicle matches the first one.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How long does installation take?</summary>
+            <p>Most vans and trucks take 1–3 days depending on coverage. For fleets, we schedule vehicles in phases so your crews stay on the road.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do you wrap trailers and box trucks?</summary>
+            <p>Yes. Trailers and box trucks are some of the best advertising surfaces a service business owns — large, flat, and highly visible in traffic and on job sites.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What information should be on a service vehicle?</summary>
+            <p>At minimum: your service category, phone number, company name, and service area. License numbers where required. The goal is that a homeowner can understand what you do and how to reach you in about three seconds.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can you help redesign an outdated fleet?</summary>
+            <p>Yes — that's exactly what our Fleet Refresh package is for. We audit what you have, recommend a cleaner system, and phase the updates so you're never off the road.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do you work with new businesses?</summary>
+            <p>Absolutely. A professional wrap on day one helps a new company look established from the first service call.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do you serve areas outside Deer Valley?</summary>
+            <p>Yes. We're based in the Deer Valley / North Phoenix area and serve Glendale, Peoria, Scottsdale Airpark, Cave Creek, North Scottsdale, and Greater Phoenix. West Valley fleet projects by request.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FINAL CTA + CONTACT FORM ================= -->
+    <section class="section section-cta-final" id="contact">
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <p class="eyebrow" data-reveal>Free Fleet Visibility Audit</p>
+          <h2 data-reveal>Ready to make your fleet look like your best salesperson?</h2>
+          <p class="lead" data-reveal>Start with a free audit. Send us photos of your vehicles and we'll show you how to make your fleet more readable, consistent, and professional.</p>
+          <ul class="hero-points" data-reveal>
+            <li>No cost, no pressure</li>
+            <li>Practical recommendations you can use either way</li>
+            <li>Response within one business day</li>
+          </ul>
+        </div>
+
+        <!-- ============ LEAD FORM ============
+             INTEGRATION NOTES (see README.md for details):
+             • Zapier:   point action="" to your Zapier Catch Hook URL and set method="POST",
+                         or keep the JS fetch() in js/main.js (search for FORM_ENDPOINT).
+             • HubSpot:  replace this form with a HubSpot embed, or map these field names
+                         to HubSpot form fields via the Forms API.
+             • Airtable: POST the serialized fields to an Airtable automation webhook.
+             • Email:    services like Formspree/Basin work by setting action="https://formspree.io/f/XXXX".
+        -->
+        <form class="lead-form card" id="lead-form" novalidate data-reveal>
+          <h3>Request My Free Audit</h3>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="f-name" name="name" autocomplete="name" required>
+            </div>
+            <div class="form-field">
+              <label for="f-business">Business name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="f-business" name="business" autocomplete="organization" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input type="email" id="f-email" name="email" autocomplete="email" required>
+            </div>
+            <div class="form-field">
+              <label for="f-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="f-phone" name="phone" autocomplete="tel" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="f-industry">Industry</label>
+              <select id="f-industry" name="industry">
+                <option value="">Select your industry…</option>
+                <option>HVAC</option>
+                <option>Plumbing</option>
+                <option>Electrical</option>
+                <option>Pest Control</option>
+                <option>Pool Service</option>
+                <option>Garage Door</option>
+                <option>Roofing / Restoration</option>
+                <option>Solar</option>
+                <option>Landscaping</option>
+                <option>Property Maintenance</option>
+                <option>Other Mobile Service</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="f-count">Number of vehicles</label>
+              <select id="f-count" name="vehicle_count">
+                <option value="">How many vehicles?</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3–5</option>
+                <option>6–10</option>
+                <option>11–25</option>
+                <option>25+</option>
+              </select>
+            </div>
+          </div>
+
+          <fieldset class="form-field">
+            <legend>Vehicle types</legend>
+            <div class="chip-group">
+              <label class="chip"><input type="checkbox" name="vehicle_types" value="Van"> Van</label>
+              <label class="chip"><input type="checkbox" name="vehicle_types" value="Truck"> Truck</label>
+              <label class="chip"><input type="checkbox" name="vehicle_types" value="Trailer"> Trailer</label>
+              <label class="chip"><input type="checkbox" name="vehicle_types" value="Box Truck"> Box truck</label>
+              <label class="chip"><input type="checkbox" name="vehicle_types" value="Mixed Fleet"> Mixed fleet</label>
+            </div>
+          </fieldset>
+
+          <div class="form-field">
+            <label for="f-need">What do you need?</label>
+            <select id="f-need" name="need">
+              <option value="">Select an option…</option>
+              <option value="full">Full wrap</option>
+              <option value="partial">Partial wrap</option>
+              <option value="lettering">Lettering</option>
+              <option value="refresh">Fleet refresh</option>
+              <option value="new-vehicle">New vehicle</option>
+              <option value="not-sure">Not sure yet</option>
+            </select>
+          </div>
+
+          <!-- PHOTO UPLOAD: enable once you have file handling (e.g., a form service
+               that supports attachments, or a Zapier/Airtable upload step). -->
+          <div class="form-field upload-placeholder" aria-label="Photo upload coming soon">
+            <span class="upload-icon" aria-hidden="true">📷</span>
+            <div>
+              <strong>Photo upload coming soon</strong>
+              <p>For now, just submit the form — we'll reply with an email address where you can send vehicle photos.</p>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" rows="4" placeholder="Tell us about your fleet, timeline, or current graphics…"></textarea>
+          </div>
+
+          <fieldset class="form-field">
+            <legend>Preferred contact method</legend>
+            <div class="chip-group">
+              <label class="chip"><input type="radio" name="contact_method" value="Phone" checked> Phone</label>
+              <label class="chip"><input type="radio" name="contact_method" value="Email"> Email</label>
+              <label class="chip"><input type="radio" name="contact_method" value="Text"> Text</label>
+            </div>
+          </fieldset>
+
+          <p class="form-error" id="form-error" role="alert" hidden>Please fill in the highlighted fields so we can reach you.</p>
+          <p class="form-success" id="form-success" role="status" hidden>Thanks — your audit request is in. We'll reach out within one business day.</p>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Free Audit</button>
+          <p class="fine-print">Free audit. No obligation. We respond within one business day.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="brand">
+          <span class="brand-mark" aria-hidden="true">VF</span>
+          <span class="brand-name">Valley <strong>Fleet Wraps</strong></span>
+        </a>
+        <p>Commercial Fleet Wraps &amp; Graphics<br>Serving Deer Valley, North Phoenix, and Greater Phoenix</p>
+        <p class="footer-tagline">Commercial wraps built for work trucks, not show cars.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <nav aria-label="Footer navigation">
+          <a href="#audit">Free Fleet Visibility Audit</a>
+          <a href="#services">Fleet Wrap Services</a>
+          <a href="#industries">Industries Served</a>
+          <a href="#packages">Packages</a>
+          <a href="#process">Process</a>
+          <a href="#service-area">Service Area</a>
+          <a href="#faq">FAQs</a>
+          <a href="#contact">Contact / Quote</a>
+        </nav>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <!-- TODO: replace placeholders with real contact details -->
+        <p><a href="tel:+16020000000">(602) 000-0000</a></p>
+        <p><a href="mailto:hello@valleyfleetwraps.com">hello@valleyfleetwraps.com</a></p>
+        <p>Deer Valley, Phoenix, AZ<br><em>Street address coming soon</em></p>
+      </div>
+
+      <div class="footer-col footer-taglines">
+        <h4>Our Promise</h4>
+        <p>Your fleet. Your brand. Everywhere.</p>
+        <p>Make every service call advertise the next one.</p>
+        <p>Look bigger. Drive cleaner. Get remembered.</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© <span id="year">2026</span> Valley Fleet Wraps. All rights reserved.</p>
+      <p>Fleet wraps Deer Valley · Commercial vehicle wraps North Phoenix · Fleet graphics Phoenix</p>
+    </div>
+  </footer>
+
+  <!-- ============ ANALYTICS ============
+       TODO: add Google Analytics / GTM snippet here, e.g.
+       <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  -->
+
+  <!-- three.js (r128 global build) + GSAP + ScrollTrigger — vendored locally for
+       speed and reliability (no CDN dependency). Sourced from npm: three@0.128.0, gsap@3.12.5 -->
+  <script src="js/vendor/three.min.js" defer></script>
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="js/scene.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
