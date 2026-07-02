@@ -98,25 +98,106 @@
 
         <!-- Stylized wrapped-van mockup. Replace with real fleet photography when available:
              swap this figure for <img src="assets/img/hero-van.jpg" alt="Wrapped HVAC service van in North Phoenix"> -->
-        <figure class="hero-van" data-hero-van aria-label="Mockup of a wrapped service van with large phone number and service category">
+        <figure class="hero-van" data-hero-van aria-label="Mockup of a fully wrapped service van at dusk with large phone number and service category">
           <div class="van-card">
-            <svg viewBox="0 0 560 300" class="van-svg" role="img" aria-labelledby="vanTitle">
-              <title id="vanTitle">Stylized wrapped service van mockup</title>
+            <svg viewBox="0 0 640 360" class="van-svg" role="img" aria-labelledby="vanTitle">
+              <title id="vanTitle">Stylized wrapped service van mockup on a desert road at dusk</title>
+              <defs>
+                <linearGradient id="vfw-sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#0e1b2c"/>
+                  <stop offset="0.62" stop-color="#27374e"/>
+                  <stop offset="1" stop-color="#7a4526"/>
+                </linearGradient>
+                <linearGradient id="vfw-body" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff"/>
+                  <stop offset="1" stop-color="#ddd7c8"/>
+                </linearGradient>
+                <clipPath id="vfw-van-clip">
+                  <path d="M84 264 L84 96 Q84 74 108 72 L392 68 Q421 68 436 87 L483 145 Q490 153 502 155 L553 163 Q574 167 578 184 L582 226 Q583 246 566 250 L560 264 L538 264 A46 46 0 0 0 446 264 L218 264 A46 46 0 0 0 126 264 Z"/>
+                </clipPath>
+              </defs>
+
+              <!-- backdrop: dusk sky, sun, mountains, road -->
+              <rect width="640" height="360" rx="14" fill="url(#vfw-sky)"/>
+              <circle cx="512" cy="214" r="66" fill="#e5854a" opacity="0.2"/>
+              <circle cx="512" cy="214" r="34" fill="#e5854a" opacity="0.5"/>
+              <path d="M0 250 L70 216 L130 244 L210 208 L300 248 L390 222 L470 250 L560 224 L640 246 L640 270 L0 270 Z" fill="#101f31" opacity="0.9"/>
+              <path d="M0 268 L640 268 L640 346 Q640 360 626 360 L14 360 Q0 360 0 346 Z" fill="#0d1725"/>
+              <g fill="#f6f1e8" opacity="0.3">
+                <rect x="28" y="332" width="58" height="6" rx="3"/>
+                <rect x="150" y="332" width="58" height="6" rx="3"/>
+                <rect x="272" y="332" width="58" height="6" rx="3"/>
+                <rect x="394" y="332" width="58" height="6" rx="3"/>
+                <rect x="516" y="332" width="58" height="6" rx="3"/>
+              </g>
+              <ellipse cx="334" cy="308" rx="256" ry="12" fill="#000000" opacity="0.38"/>
+
               <!-- van body -->
-              <path d="M40 210 L40 120 Q40 100 60 100 L330 100 Q345 100 355 110 L420 110 Q450 110 470 135 L505 175 Q515 185 515 200 L515 210 Q515 222 503 222 L52 222 Q40 222 40 210 Z" fill="#e8e4dc"/>
-              <!-- wrap swoosh -->
-              <path d="M40 210 L40 168 Q170 138 330 162 Q440 178 515 200 L515 210 Q515 222 503 222 L52 222 Q40 222 40 210 Z" fill="#d9702e"/>
-              <path d="M40 176 Q170 146 330 170 Q440 186 515 204 L515 196 Q440 172 330 156 Q170 132 40 162 Z" fill="#10263f"/>
-              <!-- windows -->
-              <path d="M362 116 L418 116 Q442 116 458 136 L482 164 L370 164 Q362 164 362 156 Z" fill="#22384f"/>
+              <path d="M84 264 L84 96 Q84 74 108 72 L392 68 Q421 68 436 87 L483 145 Q490 153 502 155 L553 163 Q574 167 578 184 L582 226 Q583 246 566 250 L560 264 L538 264 A46 46 0 0 0 446 264 L218 264 A46 46 0 0 0 126 264 Z"
+                    fill="url(#vfw-body)" stroke="#0a1420" stroke-opacity="0.3" stroke-width="2"/>
+
+              <!-- wrap: navy sweep with copper stripe, clipped to the body -->
+              <g clip-path="url(#vfw-van-clip)">
+                <path d="M84 196 C200 170 340 176 470 200 C520 209 560 216 600 224 L600 330 L84 330 Z" fill="#10263f"/>
+                <path d="M84 186 C200 160 340 166 470 190 C520 199 560 206 600 214 L600 226 C560 218 520 211 470 202 C340 178 200 172 84 198 Z" fill="#d9702e"/>
+                <!-- panel seams: cab divider + sliding door -->
+                <line x1="432" y1="80" x2="432" y2="262" stroke="#0a1420" stroke-opacity="0.16" stroke-width="2"/>
+                <rect x="300" y="84" width="126" height="172" rx="6" fill="none" stroke="#0a1420" stroke-opacity="0.14" stroke-width="2"/>
+                <!-- front bumper + grille -->
+                <path d="M552 222 L582 226 Q583 246 566 250 L560 266 L552 266 Z" fill="#232e3a"/>
+                <!-- rocker shadow under the doors -->
+                <rect x="84" y="258" width="480" height="8" fill="#0a1420" opacity="0.25"/>
+              </g>
+
+              <!-- cab window with A-pillar rake + reflection -->
+              <path d="M436 96 L452 96 L492 150 L436 150 Z" fill="#1d2f44"/>
+              <line x1="446" y1="102" x2="480" y2="146" stroke="#4c6a86" stroke-width="3" opacity="0.55"/>
+              <!-- windshield sliver along the rake -->
+              <path d="M433 93 L478 147 Q482 152 490 154 L498 154 Q489 152 485 147 L437 89 Z" fill="#22384f"/>
+              <!-- mirror -->
+              <line x1="487" y1="110" x2="504" y2="105" stroke="#10263f" stroke-width="4"/>
+              <rect x="500" y="96" width="12" height="22" rx="3" fill="#10263f"/>
+              <!-- door handle -->
+              <rect x="497" y="168" width="20" height="6" rx="3" fill="#3d4f63"/>
+              <!-- headlight + taillight -->
+              <path d="M556 168 L578 172 Q583 180 582 190 L556 186 Q551 176 556 168 Z" fill="#f7ead2" opacity="0.95"/>
+              <rect x="84" y="104" width="7" height="44" rx="2" fill="#b8452e"/>
+              <!-- roof highlight -->
+              <line x1="112" y1="76" x2="388" y2="72" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
               <!-- wrap lettering -->
-              <text x="70" y="140" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="30" font-weight="800" fill="#10263f" letter-spacing="1">YOUR COMPANY HVAC</text>
-              <text x="70" y="200" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="34" font-weight="800" fill="#fdf7ef" letter-spacing="2">(602) 555-0148</text>
+              <text x="112" y="130" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="38" font-weight="800" fill="#10263f" letter-spacing="1">YOUR COMPANY</text>
+              <rect x="112" y="142" width="252" height="26" rx="13" fill="#d9702e"/>
+              <text x="238" y="160" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="15" font-weight="700" fill="#ffffff" letter-spacing="2">HEATING &amp; AIR CONDITIONING</text>
+              <text x="112" y="236" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="40" font-weight="800" fill="#fdf7ef" letter-spacing="1">(602) 555-0148</text>
+              <text x="240" y="257" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="13" font-weight="700" fill="#e5854a" letter-spacing="3">YOURCOMPANY.COM</text>
+              <text x="100" y="90" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="11" font-weight="700" fill="#8593a2" letter-spacing="1">UNIT 12</text>
+
               <!-- wheels -->
-              <circle cx="130" cy="222" r="30" fill="#0b1622"/><circle cx="130" cy="222" r="13" fill="#8a94a0"/>
-              <circle cx="430" cy="222" r="30" fill="#0b1622"/><circle cx="430" cy="222" r="13" fill="#8a94a0"/>
-              <!-- ground -->
-              <rect x="10" y="250" width="540" height="3" rx="1.5" fill="#d9702e" opacity="0.5"/>
+              <g>
+                <circle cx="172" cy="272" r="38" fill="#0b1420"/>
+                <circle cx="172" cy="272" r="26" fill="none" stroke="#1d2732" stroke-width="3"/>
+                <circle cx="172" cy="272" r="16" fill="#98a2ad"/>
+                <g stroke="#5b6672" stroke-width="3">
+                  <line x1="172" y1="258" x2="172" y2="286"/>
+                  <line x1="158" y1="272" x2="186" y2="272"/>
+                  <line x1="162" y1="262" x2="182" y2="282"/>
+                  <line x1="182" y1="262" x2="162" y2="282"/>
+                </g>
+                <circle cx="172" cy="272" r="5" fill="#303844"/>
+              </g>
+              <g>
+                <circle cx="492" cy="272" r="38" fill="#0b1420"/>
+                <circle cx="492" cy="272" r="26" fill="none" stroke="#1d2732" stroke-width="3"/>
+                <circle cx="492" cy="272" r="16" fill="#98a2ad"/>
+                <g stroke="#5b6672" stroke-width="3">
+                  <line x1="492" y1="258" x2="492" y2="286"/>
+                  <line x1="478" y1="272" x2="506" y2="272"/>
+                  <line x1="482" y1="262" x2="502" y2="282"/>
+                  <line x1="502" y1="262" x2="482" y2="282"/>
+                </g>
+                <circle cx="492" cy="272" r="5" fill="#303844"/>
+              </g>
             </svg>
             <figcaption class="van-caption">Readable from across the intersection — that's the standard.</figcaption>
           </div>
