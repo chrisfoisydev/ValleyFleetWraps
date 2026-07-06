@@ -11,8 +11,15 @@
   <meta property="og:title" content="Valley Fleet Wraps | Commercial Fleet Wraps Across the Phoenix Valley">
   <meta property="og:description" content="Your trucks should make the phone ring. Fleet wraps for Arizona service companies that want to look bigger, cleaner, and easier to remember.">
   <meta property="og:type" content="website">
-  <!-- TODO: Add og:image once brand photography exists, e.g. <meta property="og:image" content="/assets/img/og-fleet.jpg"> -->
-  <link rel="canonical" href="https://valleyfleetwraps.com/"> <!-- TODO: replace with live domain -->
+  <meta property="og:url" content="https://valleyfleetwraps.com/">
+  <meta property="og:image" content="https://valleyfleetwraps.com/assets/img/og-fleet.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://valleyfleetwraps.com/assets/img/og-fleet.jpg">
+  <!-- Confirm this matches the live domain before launch (also referenced in
+       robots.txt and sitemap.xml). -->
+  <link rel="canonical" href="https://valleyfleetwraps.com/">
 
   <!-- Local business structured data for local SEO -->
   <script type="application/ld+json">
@@ -20,6 +27,7 @@
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Valley Fleet Wraps",
+    "url": "https://valleyfleetwraps.com/",
     "description": "Commercial fleet wraps, service van graphics, truck wraps, and fleet branding for service businesses across the Phoenix Valley.",
     "areaServed": ["Phoenix", "Deer Valley", "Glendale", "Peoria", "Scottsdale", "Mesa", "Tempe", "Chandler", "Gilbert", "Queen Creek", "Cave Creek", "Anthem", "Surprise", "Goodyear", "Avondale"],
     "address": {
@@ -30,6 +38,96 @@
     },
     "telephone": "+1-480-788-8859",
     "priceRange": "$$"
+  }
+  </script>
+
+  <!-- FAQ structured data — keep in sync with the visible #faq section. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much does a commercial fleet wrap cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on vehicle type, wrap coverage, and fleet size. Lettering packages cost less than partial wraps, and partial wraps cost less than full wraps. Send photos of your vehicles and we'll give you a clear quote — no obligation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a full wrap or partial wrap?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not every fleet needs full coverage. Many service businesses get excellent results from a well-designed partial wrap or lettering system. Your free audit includes a recommendation based on your vehicles and budget."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you match our existing brand?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We work from your logo, colors, and any brand guidelines you have. If your brand needs cleanup to work well at vehicle scale, we'll tell you exactly what to adjust."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you wrap one vehicle first and the rest later?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, and we recommend it for many fleets. We build your layout as a template, so every future vehicle matches the first one."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does installation take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most vans and trucks take 1–3 days depending on coverage. For fleets, we schedule vehicles in phases so your crews stay on the road."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you wrap trailers and box trucks?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Trailers and box trucks are some of the best advertising surfaces a service business owns — large, flat, and highly visible in traffic and on job sites."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What information should be on a service vehicle?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "At minimum: your service category, phone number, company name, and service area. License numbers where required. The goal is that a homeowner can understand what you do and how to reach you in about three seconds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you help redesign an outdated fleet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — that's exactly what our Fleet Refresh package is for. We audit what you have, recommend a cleaner system, and phase the updates so you're never off the road."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you work with new businesses?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. A professional wrap on day one helps a new company look established from the first service call."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you serve the whole Valley?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We're based in Deer Valley and work with fleets everywhere in Greater Phoenix — Glendale, Peoria, Scottsdale, Mesa, Tempe, Chandler, Gilbert, Queen Creek, Surprise, Goodyear, and everywhere between. If your trucks drive the Valley, we'll come to you."
+        }
+      }
+    ]
   }
   </script>
 
@@ -757,12 +855,37 @@
        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
   -->
 
-  <!-- three.js (r128 global build) + GSAP + ScrollTrigger — vendored locally for
-       speed and reliability (no CDN dependency). Sourced from npm: three@0.128.0, gsap@3.12.5 -->
-  <script src="js/vendor/three.min.js" defer></script>
-  <script src="js/vendor/gsap.min.js" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
-  <script src="js/scene.js" defer></script>
+  <!-- main.js (nav, form) loads immediately so the page is interactive right
+       away; it works with or without GSAP. -->
   <script src="js/main.js" defer></script>
+
+  <!-- three.js (r128 global build) + GSAP + ScrollTrigger — vendored locally
+       (npm: three@0.128.0, gsap@3.12.5). Loaded AFTER the window load event so
+       the ~700 KB animation stack never competes with content for bandwidth
+       (LCP / Core Web Vitals). The CSS gradient covers the canvas until then,
+       and main.js picks up GSAP via the vfw:vendor-ready event. -->
+  <script>
+  (function () {
+    function loadSequentially(sources, done) {
+      if (!sources.length) { done(); return; }
+      var s = document.createElement('script');
+      s.src = sources[0];
+      s.onload = s.onerror = function () { loadSequentially(sources.slice(1), done); };
+      document.body.appendChild(s);
+    }
+    function loadStack() {
+      loadSequentially([
+        'js/vendor/three.min.js',
+        'js/vendor/gsap.min.js',
+        'js/vendor/ScrollTrigger.min.js',
+        'js/scene.js'
+      ], function () {
+        window.dispatchEvent(new Event('vfw:vendor-ready'));
+      });
+    }
+    if (document.readyState === 'complete') loadStack();
+    else window.addEventListener('load', loadStack);
+  })();
+  </script>
 </body>
 </html>

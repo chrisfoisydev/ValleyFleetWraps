@@ -91,8 +91,13 @@
 
   /* =========================================================
      GSAP scroll animations
-     ========================================================= */
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
+     =========================================================
+     GSAP loads lazily after the window load event (see index.html), so
+     this either runs immediately (GSAP already present) or waits for the
+     loader's vfw:vendor-ready event. Content is fully visible without it —
+     gsap.from() only adds the entrance motion. */
+  function initScrollAnimations() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || prefersReducedMotion) return;
     gsap.registerPlugin(ScrollTrigger);
 
     // Hero: staggered entrance for the copy.
@@ -135,7 +140,12 @@
         }
       });
     });
+  }
 
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    initScrollAnimations();
+  } else {
+    window.addEventListener('vfw:vendor-ready', initScrollAnimations);
   }
 
   /* =========================================================
