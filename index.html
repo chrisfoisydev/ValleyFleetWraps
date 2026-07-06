@@ -44,8 +44,9 @@
 </head>
 <body>
 
-  <!-- Fixed WebGL canvas: desert-road scene rendered by js/scene.js (three.js).
-       Visible behind the hero and final CTA; solid sections cover it mid-page. -->
+  <!-- Fixed WebGL canvas: scroll-driven drive through Phoenix rendered by
+       js/scene.js (three.js). Sections float over it as translucent panels,
+       so the scene stays visible down the entire page. -->
   <canvas id="scene-canvas" aria-hidden="true"></canvas>
 
   <!-- ================= HEADER ================= -->
@@ -127,33 +128,22 @@
         <div class="section-head narrow">
           <p class="eyebrow" data-reveal>Two Tracks</p>
           <h2 data-reveal>First wrap or rewrap &mdash; there's a lane for you.</h2>
-          <p class="lead" data-reveal>Some fleets are starting from plain white. Others are wearing graphics that no longer earn their keep. We built a process for both.</p>
         </div>
 
-        <div class="card-grid two" data-reveal-group>
-          <article class="card track-card">
-            <span class="badge">Track 1 · First-Time Wrap</span>
+        <div class="track-grid" data-reveal-group>
+          <a href="#contact" class="track-option track-cta" data-track="unwrapped">
+            <span class="track-num" aria-hidden="true">01</span>
             <h3>My trucks aren't wrapped yet</h3>
             <p>Plain vehicles are invisible vehicles. We take you from blank panels to a brand system built for the road.</p>
-            <ul class="checklist">
-              <li>Start with one vehicle or the whole fleet</li>
-              <li>Layout templates so every future truck matches</li>
-              <li>Look established from the first service call</li>
-            </ul>
-            <a href="#contact" class="btn btn-primary track-cta" data-track="unwrapped">Start My First-Wrap Audit</a>
-          </article>
+            <span class="track-go">Start my first-wrap audit &rarr;</span>
+          </a>
 
-          <article class="card track-card">
-            <span class="badge badge-navy">Track 2 · Rewrap &amp; Refresh</span>
-            <h3>My fleet is wrapped &mdash; but it needs a redo</h3>
-            <p>Faded vinyl, an old logo, a phone number nobody can read, or five trucks with five different looks &mdash; we audit what you have and phase in a cleaner system.</p>
-            <ul class="checklist">
-              <li>Honest audit of your current graphics</li>
-              <li>Redesign focused on readability and consistency</li>
-              <li>Phased removal and reinstall &mdash; your trucks stay on the road</li>
-            </ul>
-            <a href="#contact" class="btn btn-navy track-cta" data-track="rewrap">Plan My Rewrap</a>
-          </article>
+          <a href="#contact" class="track-option track-cta" data-track="rewrap">
+            <span class="track-num" aria-hidden="true">02</span>
+            <h3>Wrapped &mdash; but it needs a redo</h3>
+            <p>Faded vinyl, an old logo, or five trucks with five looks &mdash; we audit what you have and phase in a cleaner system.</p>
+            <span class="track-go">Plan my rewrap &rarr;</span>
+          </a>
         </div>
       </div>
     </section>

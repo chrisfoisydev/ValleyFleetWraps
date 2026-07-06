@@ -95,7 +95,7 @@
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero: staggered entrance for copy, van slides in from the right.
+    // Hero: staggered entrance for the copy.
     gsap.from('[data-hero-item]', {
       y: 36,
       opacity: 0,

@@ -4,13 +4,12 @@
 
    Instead of a treadmill, the world is one fixed place — a Sonoran Desert
    highway that runs from Deer Valley to downtown Phoenix — and scrolling
-   scrubs the camera along a cinematic spline through it (the pattern used
-   by exploration sites like sebastien-lempens.com): opening high over the
-   desert at dusk, swooping down behind a Valley Fleet Wraps box truck,
-   drifting alongside it past saguaros, rising over the road as downtown
-   approaches, swinging wide around a Camelback-style ridge, and pulling up
-   over the lit city at night. Mouse movement adds a free-look parallax so
-   visitors can glance around the world at any point.
+   scrubs the camera along a cinematic spline through it: opening high over
+   the desert at dusk, swooping down behind a wrapped Valley Fleet Wraps
+   cargo van, drifting alongside it past saguaros, rising over the road as
+   downtown approaches, swinging wide around a Camelback-style ridge, and
+   pulling up over the lit city at night. Mouse movement adds a free-look
+   parallax so visitors can glance around the world at any point.
 
    Palette: deep navy, copper, sand — matching the site.
 
@@ -93,23 +92,45 @@
   sky.position.set(0, 50, -280);
   backdrop.add(sky);
 
+  // Soft radial glow sprite — hard-edged circles read as flat discs.
+  function makeGlowTexture() {
+    var c = document.createElement('canvas');
+    c.width = c.height = 128;
+    var gctx = c.getContext('2d');
+    var grad = gctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grad.addColorStop(0, 'rgba(229, 133, 74, 0.9)');
+    grad.addColorStop(0.35, 'rgba(217, 112, 46, 0.32)');
+    grad.addColorStop(1, 'rgba(217, 112, 46, 0)');
+    gctx.fillStyle = grad;
+    gctx.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  }
+  var glowTex = makeGlowTexture();
+
+  // The sun sits right of the road — the hero copy owns the left side.
   var sun = new THREE.Mesh(
     new THREE.CircleGeometry(30, 48),
     new THREE.MeshBasicMaterial({ color: COPPER_LIGHT, fog: false, transparent: true, opacity: 0.95 })
   );
-  sun.position.set(-46, 30, -272);
+  sun.position.set(42, 30, -272);
   backdrop.add(sun);
 
   var sunGlow = new THREE.Mesh(
-    new THREE.CircleGeometry(58, 48),
-    new THREE.MeshBasicMaterial({ color: COPPER, fog: false, transparent: true, opacity: 0.18 })
+    new THREE.PlaneGeometry(150, 150),
+    new THREE.MeshBasicMaterial({
+      map: glowTex, fog: false, transparent: true, opacity: 0.5,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    })
   );
-  sunGlow.position.set(-46, 30, -273);
+  sunGlow.position.set(42, 30, -273);
   backdrop.add(sunGlow);
 
   var cityGlow = new THREE.Mesh(
-    new THREE.CircleGeometry(70, 48),
-    new THREE.MeshBasicMaterial({ color: COPPER, fog: false, transparent: true, opacity: 0 })
+    new THREE.PlaneGeometry(170, 170),
+    new THREE.MeshBasicMaterial({
+      map: glowTex, fog: false, transparent: true, opacity: 0,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    })
   );
   cityGlow.scale.y = 0.16;
   cityGlow.position.set(20, 10, -266);
@@ -151,13 +172,13 @@
 
   var road = new THREE.Mesh(
     new THREE.PlaneGeometry(17, 900),
-    new THREE.MeshBasicMaterial({ color: new THREE.Color('#101c2b'), transparent: true, opacity: 0.92 })
+    new THREE.MeshBasicMaterial({ color: new THREE.Color('#15263a'), transparent: true, opacity: 0.95 })
   );
   road.rotation.x = -Math.PI / 2;
   road.position.set(0, 0.02, -310);
   scene.add(road);
 
-  var edgeMat = new THREE.MeshBasicMaterial({ color: COPPER, transparent: true, opacity: 0.45 });
+  var edgeMat = new THREE.MeshBasicMaterial({ color: COPPER, transparent: true, opacity: 0.6 });
   [-8.2, 8.2].forEach(function (x) {
     var edge = new THREE.Mesh(new THREE.PlaneGeometry(0.35, 900), edgeMat);
     edge.rotation.x = -Math.PI / 2;
@@ -177,7 +198,7 @@
   dashTex.repeat.set(1, 70);
   var centerLine = new THREE.Mesh(
     new THREE.PlaneGeometry(0.55, 900),
-    new THREE.MeshBasicMaterial({ map: dashTex, transparent: true, opacity: 0.55 })
+    new THREE.MeshBasicMaterial({ map: dashTex, transparent: true, opacity: 0.7 })
   );
   centerLine.rotation.x = -Math.PI / 2;
   centerLine.position.set(0, 0.04, -310);
@@ -192,7 +213,7 @@
       var x = pos.getX(i);
       var z = pos.getZ(i);
       var edge = Math.abs(x) / 85;
-      var h = Math.sin(x * 0.14) * Math.cos(z * 0.05) * 2.2 + edge * edge * 7;
+      var h = Math.sin(x * 0.14) * Math.cos(z * 0.05) * 2.2 + edge * edge * 4.5;
       var roadFade = Math.min(Math.abs(x) / 14, 1);
       pos.setY(i, h * roadFade);
     }
@@ -200,7 +221,7 @@
       color: COPPER,
       wireframe: true,
       transparent: true,
-      opacity: 0.12
+      opacity: 0.08
     });
     var mesh = new THREE.Mesh(geo, mat);
     mesh.position.set(offsetX, 0, -310);
@@ -223,9 +244,10 @@
   /* ---------- Saguaros scattered along the whole route (static) ---------- */
   var saguaroMat = new THREE.MeshBasicMaterial({ color: SILHOUETTE });
 
+  // Kept to believable scale — a big saguaro is 2–4 van heights, not a tower.
   function makeSaguaro() {
     var g = new THREE.Group();
-    var trunkH = 10 + Math.random() * 8;
+    var trunkH = 6 + Math.random() * 4;
     var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 1.2, trunkH, 8), saguaroMat);
     trunk.position.y = trunkH / 2;
     g.add(trunk);
@@ -242,7 +264,7 @@
       arm.position.set(side * 3.0, armY + armH / 2 - 0.4, 0);
       g.add(arm);
     }
-    var s = 0.55 + Math.random() * 0.6;
+    var s = 0.6 + Math.random() * 0.5;
     g.scale.set(s, s, s);
     g.rotation.y = Math.random() * Math.PI;
     return g;
@@ -451,36 +473,37 @@
   }));
   scene.add(sprawl);
 
-  /* ---------- The Valley Fleet Wraps truck you follow ---------- */
-  var truckSideTex = makeBrandTexture(512, 256, function (ctx) {
+  /* ---------- The wrapped Valley Fleet Wraps cargo van you follow ---------- */
+  var vanSideTex = makeBrandTexture(512, 192, function (ctx) {
     ctx.fillStyle = '#efe9dc';
-    ctx.fillRect(0, 0, 512, 256);
+    ctx.fillRect(0, 0, 512, 192);
+    // Navy sweep along the rocker panel with a copper pinstripe above it.
     ctx.fillStyle = '#10263f';
     ctx.beginPath();
-    ctx.moveTo(0, 256);
-    ctx.lineTo(0, 176);
-    ctx.bezierCurveTo(170, 138, 340, 148, 512, 190);
-    ctx.lineTo(512, 256);
+    ctx.moveTo(0, 192);
+    ctx.lineTo(0, 138);
+    ctx.bezierCurveTo(170, 110, 340, 118, 512, 148);
+    ctx.lineTo(512, 192);
     ctx.closePath();
     ctx.fill();
     ctx.strokeStyle = '#d9702e';
-    ctx.lineWidth = 12;
+    ctx.lineWidth = 10;
     ctx.beginPath();
-    ctx.moveTo(0, 170);
-    ctx.bezierCurveTo(170, 132, 340, 142, 512, 184);
+    ctx.moveTo(0, 132);
+    ctx.bezierCurveTo(170, 104, 340, 112, 512, 142);
     ctx.stroke();
     ctx.fillStyle = '#10263f';
-    ctx.font = '800 58px ' + BRAND_FONT;
-    ctx.fillText('VALLEY FLEET WRAPS', 26, 78);
+    ctx.font = '800 46px ' + BRAND_FONT;
+    ctx.fillText('VALLEY FLEET WRAPS', 22, 58);
     ctx.fillStyle = '#d9702e';
-    ctx.font = '700 30px ' + BRAND_FONT;
-    ctx.fillText('COMMERCIAL WRAPS · PHOENIX VALLEY', 26, 118);
+    ctx.font = '700 24px ' + BRAND_FONT;
+    ctx.fillText('COMMERCIAL WRAPS · PHOENIX VALLEY', 22, 90);
     ctx.fillStyle = '#f6f1e8';
-    ctx.font = '800 44px ' + BRAND_FONT;
-    ctx.fillText('(602) 555-0148', 26, 232);
+    ctx.font = '800 34px ' + BRAND_FONT;
+    ctx.fillText('(602) 555-0148', 22, 176);
   });
 
-  var truckRearTex = makeBrandTexture(256, 256, function (ctx) {
+  var vanRearTex = makeBrandTexture(256, 256, function (ctx) {
     ctx.fillStyle = '#efe9dc';
     ctx.fillRect(0, 0, 256, 256);
     ctx.fillStyle = '#10263f';
@@ -491,72 +514,123 @@
     ctx.moveTo(0, 164);
     ctx.lineTo(256, 164);
     ctx.stroke();
+    // Rear door seam.
+    ctx.strokeStyle = 'rgba(16, 38, 63, 0.35)';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(128, 0);
+    ctx.lineTo(128, 256);
+    ctx.stroke();
     ctx.fillStyle = '#d9702e';
-    ctx.fillRect(88, 26, 80, 80);
+    ctx.fillRect(88, 22, 80, 80);
     ctx.fillStyle = '#ffffff';
     ctx.font = '800 48px ' + BRAND_FONT;
     ctx.textAlign = 'center';
-    ctx.fillText('VF', 128, 84);
+    ctx.fillText('VF', 128, 80);
     ctx.fillStyle = '#10263f';
     ctx.font = '800 30px ' + BRAND_FONT;
-    ctx.fillText('VALLEY FLEET WRAPS', 128, 148);
+    ctx.fillText('VALLEY FLEET WRAPS', 128, 146);
     ctx.fillStyle = '#f6f1e8';
     ctx.font = '800 36px ' + BRAND_FONT;
     ctx.fillText('(602) 555-0148', 128, 226);
   });
 
   var wheelMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#0b1420') });
-  var cabMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#10263f') });
-  var boxMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#e7e1d3') });
-  var sideMat = new THREE.MeshBasicMaterial({ map: truckSideTex });
-  var rearMat = new THREE.MeshBasicMaterial({ map: truckRearTex });
+  var bodyMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#e7e1d3') });
+  var glassMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#0c1826'), side: THREE.DoubleSide });
+  var sideMat = new THREE.MeshBasicMaterial({ map: vanSideTex });
+  var rearMat = new THREE.MeshBasicMaterial({ map: vanRearTex });
 
-  function makeFleetTruck(withRearWrap) {
+  // A one-box cargo van (Transit/Sprinter proportions), front toward -z.
+  function makeFleetVan(withRearWrap) {
     var g = new THREE.Group();
-    var box = new THREE.Mesh(new THREE.BoxGeometry(2.2, 3.0, 5.4), boxMat);
-    box.position.set(0, 2.4, -0.6);
-    g.add(box);
-    [-1.11, 1.11].forEach(function (sx) {
-      var wrap = new THREE.Mesh(new THREE.PlaneGeometry(5.2, 2.8), sideMat);
-      wrap.position.set(sx, 2.4, -0.6);
+
+    // Main body: tall cargo shell.
+    var body = new THREE.Mesh(new THREE.BoxGeometry(2.1, 2.05, 5.6), bodyMat);
+    body.position.set(0, 1.62, 0);
+    g.add(body);
+
+    // Sloped nose: low hood ahead of the body.
+    var hood = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.15, 0.95), bodyMat);
+    hood.position.set(0, 1.12, -3.22);
+    g.add(hood);
+
+    // Windshield: dark raked glass bridging the hood and the roofline.
+    var windshield = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.15), glassMat);
+    windshield.position.set(0, 2.12, -2.95);
+    windshield.rotation.x = 0.42;
+    g.add(windshield);
+
+    // Wrapped sides.
+    [-1.06, 1.06].forEach(function (sx) {
+      var wrap = new THREE.Mesh(new THREE.PlaneGeometry(5.3, 1.9), sideMat);
+      wrap.position.set(sx, 1.66, 0);
       wrap.rotation.y = sx > 0 ? Math.PI / 2 : -Math.PI / 2;
       g.add(wrap);
     });
+
+    // Wrapped rear doors.
     if (withRearWrap) {
-      var rear = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 2.8), rearMat);
-      rear.position.set(0, 2.4, 2.11);
+      var rear = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 1.95), rearMat);
+      rear.position.set(0, 1.65, 2.81);
       g.add(rear);
     }
-    var cabBox = new THREE.Mesh(new THREE.BoxGeometry(2.1, 1.9, 1.7), cabMat);
-    cabBox.position.set(0, 1.45, -4.1);
-    g.add(cabBox);
-    [-2.5, 1.6].forEach(function (wz) {
-      var axle = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 2.3, 10), wheelMat);
+
+    // Two axles.
+    [-2.2, 1.9].forEach(function (wz) {
+      var axle = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 2.2, 10), wheelMat);
       axle.rotation.z = Math.PI / 2;
-      axle.position.set(0, 0.55, wz);
+      axle.position.set(0, 0.48, wz);
       g.add(axle);
     });
-    // Taillights so the truck reads at night.
+
+    // Taillights so the van reads at night from behind.
     [-0.85, 0.85].forEach(function (lx) {
       var tail = new THREE.Mesh(
-        new THREE.PlaneGeometry(0.3, 0.12),
+        new THREE.PlaneGeometry(0.26, 0.5),
         new THREE.MeshBasicMaterial({ color: new THREE.Color('#e5544a'), fog: false })
       );
-      tail.position.set(lx, 1.1, 2.12);
+      tail.position.set(lx, 1.4, 2.82);
       g.add(tail);
     });
+
+    // Headlights on the nose (seen on oncoming traffic).
+    [-0.7, 0.7].forEach(function (lx) {
+      var head = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.34, 0.18),
+        new THREE.MeshBasicMaterial({ color: new THREE.Color('#ffe2ae'), fog: false })
+      );
+      head.position.set(lx, 1.05, -3.71);
+      head.rotation.y = Math.PI;
+      g.add(head);
+    });
+
     return g;
   }
 
-  // The lead truck faces away from the camera (driving toward downtown).
-  var leadTruck = makeFleetTruck(true);
-  leadTruck.rotation.y = Math.PI;
-  leadTruck.position.set(-4.3 + 8.6, 0, -60); // right-hand lane (x ≈ 4.3)
-  leadTruck.position.x = 4.3;
-  scene.add(leadTruck);
+  // The lead van drives toward downtown (-z); its wrapped rear doors and
+  // taillights face the camera. Right-hand lane (x ≈ 4.3). Slightly
+  // over-scale so the wrap reads clearly at follow distance.
+  var leadVan = makeFleetVan(true);
+  leadVan.scale.setScalar(1.2);
+  leadVan.position.set(4.3, 0, -60);
+  scene.add(leadVan);
 
-  // One oncoming truck loops back toward Deer Valley.
-  var oncoming = makeFleetTruck(false);
+  // Warm pool of headlight glow on the asphalt ahead of the lead van.
+  var headlightPool = new THREE.Mesh(
+    new THREE.PlaneGeometry(5.5, 13),
+    new THREE.MeshBasicMaterial({
+      color: new THREE.Color('#ffdca0'), transparent: true, opacity: 0.08, depthWrite: false
+    })
+  );
+  headlightPool.rotation.x = -Math.PI / 2;
+  headlightPool.position.set(4.3, 0.05, -70);
+  scene.add(headlightPool);
+
+  // One oncoming van heads back toward Deer Valley (+z), headlights first.
+  var oncoming = makeFleetVan(false);
+  oncoming.scale.setScalar(1.2);
+  oncoming.rotation.y = Math.PI;
   oncoming.position.set(-4.3, 0, -180);
   scene.add(oncoming);
 
@@ -586,9 +660,9 @@
      by scroll. Each leg lines up with a stretch of the page.
      ========================================================= */
   var camPath = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(26, 22, 42),     // hero: high over Deer Valley, sunset view
-    new THREE.Vector3(10, 7, -46),     // problem: swooping down toward the road
-    new THREE.Vector3(0, 4.6, -150),   // solution/audit: right behind the truck
+    new THREE.Vector3(11, 7.5, -26),   // hero: low behind the van, sunset ahead
+    new THREE.Vector3(5, 5.5, -90),    // problem: tucking in close behind
+    new THREE.Vector3(0, 4.6, -150),   // solution/audit: right behind the van
     new THREE.Vector3(-14, 5, -240),   // industries: drifting alongside, saguaros passing
     new THREE.Vector3(9, 14, -330),    // services/packages: rising over the highway
     new THREE.Vector3(0, 5, -440),     // service area/before: back down for the chase
@@ -597,8 +671,8 @@
   ]);
 
   var lookPath = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 3, -34),
-    new THREE.Vector3(-2, 2, -120),
+    new THREE.Vector3(-2, 2.2, -70),  // hero: van framed right of the copy
+    new THREE.Vector3(0, 2.3, -145),
     new THREE.Vector3(0, 2.5, -215),
     new THREE.Vector3(5, 2.5, -295),
     new THREE.Vector3(0, 4, -420),
@@ -714,14 +788,18 @@
     // The horizon set keeps its distance.
     backdrop.position.z = camPos.z;
 
-    // The lead truck drives the route ahead of the camera; it eases toward
+    // The lead van drives the route ahead of the camera; it eases toward
     // downtown with you and idles forward on its own when you stop. Keep it
     // strictly ahead — fast scrubs must never drive the camera through it.
-    var leadTarget = camPos.z - 60;
-    leadTruck.position.z += (leadTarget - leadTruck.position.z) * 0.05 - 0.06;
-    if (leadTruck.position.z < camPos.z - 90) leadTruck.position.z = camPos.z - 90;
-    if (leadTruck.position.z > camPos.z - 25) leadTruck.position.z = camPos.z - 25;
-    leadTruck.position.y = Math.sin(t * 6) * 0.03;
+    var leadTarget = camPos.z - 42;
+    leadVan.position.z += (leadTarget - leadVan.position.z) * 0.05 - 0.06;
+    if (leadVan.position.z < camPos.z - 75) leadVan.position.z = camPos.z - 75;
+    if (leadVan.position.z > camPos.z - 22) leadVan.position.z = camPos.z - 22;
+    leadVan.position.y = Math.sin(t * 6) * 0.03;
+
+    // Headlight pool rides just ahead of the van, brightening as night falls.
+    headlightPool.position.z = leadVan.position.z - 12;
+    headlightPool.material.opacity = 0.06 + p * 0.12;
 
     // Oncoming traffic heads back toward Deer Valley past you.
     oncoming.position.z += 0.5 + throttle * 1.2;
@@ -735,7 +813,7 @@
     sunGlow.position.y = sun.position.y;
     sunGlow.scale.setScalar(1 + p * 0.5);
     sun.material.opacity = 0.95 - p * 0.35;
-    sunGlow.material.opacity = 0.18 + Math.sin(t * 0.8) * 0.02;
+    sunGlow.material.opacity = (0.5 + Math.sin(t * 0.8) * 0.05) * (1 - p * 0.5);
 
     skyMat.uniforms.top.value.lerpColors(SKY_TOP_DUSK, SKY_TOP_NIGHT, p);
     skyMat.uniforms.horizon.value.lerpColors(SKY_HORIZON_DUSK, SKY_HORIZON_NIGHT, p);

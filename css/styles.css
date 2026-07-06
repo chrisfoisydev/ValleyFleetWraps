@@ -173,33 +173,39 @@ p { margin: 0 0 1em; }
 
 .narrow { max-width: 780px; }
 
-.section { padding: 72px 0; }
+.section { padding: 30px 0; }
 
 .section-head { margin-bottom: 2.5rem; }
 
 .section-cta { margin-top: 3rem; text-align: center; }
 
-/* Section themes — all translucent so the three.js Phoenix drive runs
-   behind the entire page. Opacity varies to keep the section rhythm. */
-.section-dark {
-  background: rgba(14, 27, 44, 0.86);
+/* Sections float over the three.js Phoenix drive as contained glass
+   panels — the scene stays visible in the gaps between sections and in
+   the margins beside them, all the way down the page. */
+.section {
   color: var(--white);
+  --panel-bg: rgba(10, 20, 32, 0.6);
 }
-.section-navy {
-  background: linear-gradient(160deg, rgba(20, 40, 63, 0.87), rgba(14, 27, 44, 0.87) 70%);
-  color: var(--white);
+.section-dark { --panel-bg: rgba(14, 27, 44, 0.64); }
+.section-navy { --panel-bg: rgba(17, 33, 52, 0.66); }
+.section-sand { --panel-bg: rgba(15, 28, 45, 0.6); }
+.section-light { --panel-bg: rgba(8, 16, 27, 0.56); }
+.section-cta-final { --panel-bg: rgba(10, 20, 32, 0.72); }
+
+.section > .container {
+  width: calc(100% - 32px);
+  background: var(--panel-bg);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-lg);
+  padding: 48px 24px;
+  box-shadow: 0 18px 50px rgba(4, 10, 18, 0.35);
 }
-.section-sand {
-  background: rgba(16, 30, 48, 0.8);
-  color: var(--white);
-}
-.section-light {
-  background: rgba(9, 17, 28, 0.72);
-  color: var(--white);
-}
-.section-cta-final {
-  background: linear-gradient(180deg, rgba(10, 20, 32, 0.9), rgba(10, 20, 32, 0.78));
-  color: var(--white);
+
+/* Browsers without backdrop-filter get a more opaque panel for legibility. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .section > .container { background: rgba(10, 20, 32, 0.9); }
 }
 
 /* ---------- Buttons ---------- */
@@ -242,13 +248,6 @@ p { margin: 0 0 1em; }
   background: transparent;
 }
 .btn-ghost-dark:hover { border-color: var(--copper-400); color: var(--copper-400); }
-
-.btn-navy {
-  background: var(--navy-700);
-  color: #fff;
-  border-color: var(--navy-600);
-}
-.btn-navy:hover { background: var(--navy-600); }
 
 .btn-lg { padding: 1em 1.8em; font-size: 1.15rem; }
 .btn-sm { padding: 0.55em 1.1em; font-size: 0.95rem; }
@@ -463,30 +462,21 @@ p { margin: 0 0 1em; }
 
 /* ---------- Cards ---------- */
 .card {
-  background: var(--white);
-  color: var(--ink); /* cards stay solid light surfaces over the dark world */
+  background: rgba(14, 27, 44, 0.8);
+  color: var(--white);
   border-radius: var(--radius);
   padding: 28px 24px;
   box-shadow: var(--shadow);
-  border: 1px solid var(--line-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.card-outline { color: inherit; } /* outline cards sit directly on the section */
-
-.section-dark .card,
-.section-navy .card,
-.section-cta-final .card {
-  background: var(--navy-700);
-  border-color: var(--line-dark);
-  color: #fff;
-}
-.section-dark .card p,
-.section-navy .card p { color: rgba(255, 255, 255, 0.75); }
+.card p { color: rgba(255, 255, 255, 0.75); }
 
 .card-outline {
   background: transparent;
   box-shadow: none;
   border: 1px solid var(--line-dark);
+  color: inherit;
 }
 
 .card-grid {
@@ -527,17 +517,56 @@ p { margin: 0 0 1em; }
   color: rgba(255, 255, 255, 0.8);
 }
 
-.badge-navy { background: var(--navy-700); }
-
 /* ---------- Two-track chooser ---------- */
-.track-card {
+.track-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+.track-option {
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: var(--white);
+  background: rgba(14, 27, 44, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 26px 24px;
+  transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
-.track-card h3 { font-size: 1.7rem; }
-.track-card p { color: var(--ink-soft); }
-.track-card .checklist { margin: 0.6rem 0 1.6rem; flex: 1; }
-.track-card .checklist li { color: var(--ink); font-size: 0.98rem; }
+.track-option:hover {
+  transform: translateY(-3px);
+  border-color: var(--copper-500);
+  background: rgba(20, 40, 63, 0.85);
+}
+.track-option:focus-visible { outline: 3px solid var(--copper-400); outline-offset: 2px; }
+
+.track-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: rgba(229, 133, 74, 0.45);
+  margin-bottom: 6px;
+}
+
+.track-option h3 { font-size: 1.5rem; margin-bottom: 0.3em; }
+.track-option p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.97rem;
+  margin: 0 0 18px;
+  flex: 1;
+}
+
+.track-go {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--copper-400);
+}
+.track-option:hover .track-go { color: var(--copper-500); }
 
 .hero-fork {
   margin: -0.6rem 0 1.8rem;
@@ -624,7 +653,7 @@ p { margin: 0 0 1em; }
 .industries-grid { grid-template-columns: 1fr; }
 
 .industry-card h3 { font-size: 1.25rem; margin-bottom: 0.4em; }
-.industry-card p { font-size: 0.95rem; color: var(--ink-soft); margin: 0; }
+.industry-card p { font-size: 0.95rem; margin: 0; }
 
 /* ---------- Services ---------- */
 .service-card { position: relative; overflow: hidden; }
@@ -634,12 +663,12 @@ p { margin: 0 0 1em; }
   font-weight: 800;
   font-size: 3.4rem;
   line-height: 1;
-  color: rgba(217, 112, 46, 0.18);
+  color: rgba(229, 133, 74, 0.35);
   display: block;
   margin-bottom: 6px;
 }
 
-.service-card p { color: var(--ink-soft); margin: 0; }
+.service-card p { margin: 0; }
 
 /* ---------- Packages ---------- */
 .packages-grid { grid-template-columns: 1fr; }
@@ -702,7 +731,7 @@ p { margin: 0 0 1em; }
   gap: 4px;
   text-align: center;
   padding: 10px;
-  border: 2px dashed var(--line-light);
+  border: 2px dashed rgba(255, 255, 255, 0.18);
 }
 
 .ba-placeholder span {
@@ -713,7 +742,7 @@ p { margin: 0 0 1em; }
 }
 .ba-placeholder small { font-size: 0.72rem; opacity: 0.65; line-height: 1.3; }
 
-.ba-before { background: #eef0f2; color: #6a7480; }
+.ba-before { background: rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.55); }
 .ba-after {
   background: linear-gradient(150deg, var(--navy-700), var(--navy-800));
   color: var(--copper-400);
@@ -721,7 +750,7 @@ p { margin: 0 0 1em; }
 }
 
 .ba-card h3 { font-size: 1.15rem; }
-.ba-card p { font-size: 0.92rem; color: var(--ink-soft); margin: 0; }
+.ba-card p { font-size: 0.92rem; margin: 0; }
 
 /* ---------- Process ---------- */
 .process-steps {
@@ -763,9 +792,9 @@ p { margin: 0 0 1em; }
 .faq-list { margin-top: 2rem; }
 
 .faq-item {
-  background: var(--white);
-  color: var(--ink); /* stays a solid light surface over the dark world */
-  border: 1px solid var(--line-light);
+  background: rgba(14, 27, 44, 0.8);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius);
   margin-bottom: 12px;
   overflow: hidden;
@@ -798,7 +827,7 @@ p { margin: 0 0 1em; }
 .faq-item p {
   padding: 0 20px 18px;
   margin: 0;
-  color: var(--ink-soft);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 /* ---------- Contact / form ---------- */
@@ -985,9 +1014,12 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
    ========================================================================== */
 
 @media (min-width: 640px) {
-  .section { padding: 96px 0; }
+  .section { padding: 40px 0; }
+  .section > .container { padding: 64px 48px; }
 
   .form-row { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .track-grid { grid-template-columns: 1fr 1fr; }
 
   .card-grid.two,
   .card-grid.three,
