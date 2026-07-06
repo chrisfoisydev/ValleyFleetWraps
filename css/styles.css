@@ -127,9 +127,12 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   line-height: 1.05;
   margin: 0 0 0.5em;
-  text-transform: uppercase;
   letter-spacing: 0.01em;
 }
+
+/* Uppercase carries the big statements; card-level headings stay mixed
+   case so deep sections don't shout. */
+h1, h2 { text-transform: uppercase; }
 
 h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); font-weight: 800; }
 h2 { font-size: clamp(2rem, 5.5vw, 3.2rem); font-weight: 800; }
@@ -206,6 +209,29 @@ p { margin: 0 0 1em; }
 /* Browsers without backdrop-filter get a more opaque panel for legibility. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .section > .container { background: rgba(10, 20, 32, 0.9); }
+}
+
+/* Scene breaks: open stretches of road between panels where the 3D drive
+   is the whole show, marked only by a single line of copy. */
+.scene-break {
+  min-height: 58vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.scene-break-line {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.15;
+  font-size: clamp(1.7rem, 4.5vw, 2.7rem);
+  color: var(--white);
+  max-width: 900px;
+  margin: 0;
+  text-shadow: 0 2px 22px rgba(10, 20, 32, 0.85), 0 1px 4px rgba(10, 20, 32, 0.7);
 }
 
 /* ---------- Buttons ---------- */
@@ -322,6 +348,15 @@ p { margin: 0 0 1em; }
 .main-nav a:hover { color: var(--copper-400); }
 .main-nav .nav-cta { color: #fff; }
 
+.main-nav .nav-phone {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--copper-400);
+}
+.main-nav .nav-phone:hover { color: var(--copper-500); }
+
 .nav-toggle {
   display: inline-flex;
   flex-direction: column;
@@ -402,9 +437,28 @@ p { margin: 0 0 1em; }
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  align-items: center;
+  gap: 14px 24px;
   margin: 1.6rem 0 2rem;
 }
+
+/* Secondary hero action stays a link so the orange button owns the fold. */
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  padding: 0.5em 0;
+}
+.hero-link span { color: var(--copper-400); transition: transform 0.15s ease; }
+.hero-link:hover { color: #fff; }
+.hero-link:hover span { transform: translateX(4px); }
 
 .hero-points {
   list-style: none;
@@ -655,6 +709,13 @@ p { margin: 0 0 1em; }
 .industry-card h3 { font-size: 1.25rem; margin-bottom: 0.4em; }
 .industry-card p { font-size: 0.95rem; margin: 0; }
 
+.industries-more {
+  margin: 1.8rem auto 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 640px;
+}
+
 /* ---------- Services ---------- */
 .service-card { position: relative; overflow: hidden; }
 
@@ -838,7 +899,29 @@ p { margin: 0 0 1em; }
 }
 
 .lead-form { padding: 30px 24px; }
-.lead-form h3 { font-size: 1.6rem; margin-bottom: 1.2rem; }
+.lead-form h3 { font-size: 1.6rem; margin-bottom: 0.4rem; }
+
+.form-step-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  color: var(--copper-400);
+  margin-bottom: 1.4rem;
+}
+
+.form-back {
+  display: block;
+  margin: 14px auto 0;
+  background: none;
+  border: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.form-back:hover { color: #fff; }
 
 .form-row {
   display: grid;
@@ -950,6 +1033,40 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
 
 .lead-form .fine-print { margin-top: 0.9rem; opacity: 0.6; }
 
+/* ---------- Sticky mobile call bar ---------- */
+.mobile-cta-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: flex;
+  background: rgba(10, 20, 32, 0.97);
+  border-top: 1px solid var(--line-dark);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.mobile-cta-bar a {
+  flex: 1;
+  text-align: center;
+  padding: 15px 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #fff;
+}
+.mobile-cta-bar a:first-child { background: var(--copper-500); }
+.mobile-cta-bar .mob-audit { color: var(--copper-400); }
+
+/* Keep the bar from covering page content on small screens. */
+@media (max-width: 899px) {
+  body { padding-bottom: calc(52px + env(safe-area-inset-bottom)); }
+  .scroll-hint { bottom: 78px; }
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
   background: rgba(10, 20, 32, 0.9);
@@ -1041,6 +1158,7 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
     gap: 22px;
   }
   .nav-toggle { display: none; }
+  .mobile-cta-bar { display: none; }
 
   .card-grid.three { grid-template-columns: repeat(3, 1fr); }
   .industries-grid { grid-template-columns: repeat(3, 1fr); }
@@ -1054,17 +1172,12 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
   .footer-taglines { grid-column: auto; }
 }
 
-@media (min-width: 1100px) {
-  .industries-grid { grid-template-columns: repeat(5, 1fr); }
-  .industry-card { padding: 22px 18px; }
-  .industry-card h3 { font-size: 1.1rem; }
-  .industry-card p { font-size: 0.86rem; }
-}
-
-/* Very large nav breathing room */
-@media (min-width: 900px) and (max-width: 1080px) {
+/* Very large nav breathing room — the phone number hides in the tight
+   range where nav links + CTA already fill the header. */
+@media (min-width: 900px) and (max-width: 1180px) {
   .main-nav { gap: 14px; }
   .main-nav a { font-size: 0.88rem; }
+  .main-nav .nav-phone { display: none; }
 }
 
 /* ---------- Reduced motion ---------- */

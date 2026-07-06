@@ -500,7 +500,7 @@
     ctx.fillText('COMMERCIAL WRAPS · PHOENIX VALLEY', 22, 90);
     ctx.fillStyle = '#f6f1e8';
     ctx.font = '800 34px ' + BRAND_FONT;
-    ctx.fillText('(602) 555-0148', 22, 176);
+    ctx.fillText('(480) 788-8859', 22, 176);
   });
 
   var vanRearTex = makeBrandTexture(256, 256, function (ctx) {
@@ -532,7 +532,7 @@
     ctx.fillText('VALLEY FLEET WRAPS', 128, 146);
     ctx.fillStyle = '#f6f1e8';
     ctx.font = '800 36px ' + BRAND_FONT;
-    ctx.fillText('(602) 555-0148', 128, 226);
+    ctx.fillText('(480) 788-8859', 128, 226);
   });
 
   var wheelMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#0b1420') });
