@@ -47,8 +47,8 @@
   });
 
   /* =========================================================
-     Package CTA → pre-select the matching "What do you need?"
-     option so the form matches the visitor's intent.
+     Track + package CTAs → pre-fill the form so it matches the
+     visitor's intent (which track they're on, what they need).
      ========================================================= */
   var needMap = {
     'starter': 'lettering',
@@ -57,11 +57,29 @@
     'refresh': 'refresh'
   };
 
-  document.querySelectorAll('.package-cta').forEach(function (cta) {
+  var trackMap = {
+    'unwrapped': 'Not wrapped yet',
+    'rewrap': 'Wrapped - needs a redo'
+  };
+
+  function setFleetStatus(value) {
+    var radio = document.querySelector('input[name="fleet_status"][value="' + value + '"]');
+    if (radio) radio.checked = true;
+  }
+
+  document.querySelectorAll('.package-cta, .track-cta').forEach(function (cta) {
     cta.addEventListener('click', function () {
-      var value = needMap[cta.getAttribute('data-need')];
+      var need = needMap[cta.getAttribute('data-need')];
       var select = document.getElementById('f-need');
-      if (value && select) select.value = value;
+      if (need && select) select.value = need;
+
+      var track = trackMap[cta.getAttribute('data-track')];
+      if (track) setFleetStatus(track);
+      // Rewrap intent implies the refresh service unless something
+      // more specific was already chosen.
+      if (cta.getAttribute('data-track') === 'rewrap' && select && !select.value) {
+        select.value = 'refresh';
+      }
     });
   });
 
@@ -85,14 +103,6 @@
       stagger: 0.12,
       ease: 'power3.out',
       delay: 0.15
-    });
-
-    gsap.from('[data-hero-van]', {
-      x: 120,
-      opacity: 0,
-      duration: 1.1,
-      ease: 'power3.out',
-      delay: 0.5
     });
 
     // Section reveals: single elements.
@@ -126,17 +136,6 @@
       });
     });
 
-    // Hero van drifts subtly as you scroll past it (parallax touch).
-    gsap.to('[data-hero-van]', {
-      y: -60,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.6
-      }
-    });
   }
 
   /* =========================================================

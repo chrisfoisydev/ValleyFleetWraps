@@ -117,7 +117,7 @@ a { color: inherit; }
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, #0a1420 0%, #14283f 55%, #3a2a20 100%);
+  background: linear-gradient(180deg, #0a1420 0%, #14283f 52%, #7a4526 88%, #b35a24 100%);
 }
 
 .site-header, main, .site-footer { position: relative; z-index: 1; }
@@ -152,14 +152,9 @@ p { margin: 0 0 1em; }
 
 .lead {
   font-size: 1.1rem;
-  color: var(--ink-soft);
+  color: rgba(255, 255, 255, 0.78);
   max-width: 62ch;
 }
-
-.section-dark .lead,
-.section-navy .lead,
-.section-cta-final .lead,
-.hero .lead { color: rgba(255, 255, 255, 0.78); }
 
 .fine-print {
   font-size: 0.85rem;
@@ -184,26 +179,26 @@ p { margin: 0 0 1em; }
 
 .section-cta { margin-top: 3rem; text-align: center; }
 
-/* Section themes */
+/* Section themes — all translucent so the three.js Phoenix drive runs
+   behind the entire page. Opacity varies to keep the section rhythm. */
 .section-dark {
-  background: var(--navy-800);
+  background: rgba(14, 27, 44, 0.86);
   color: var(--white);
 }
 .section-navy {
-  background: linear-gradient(160deg, var(--navy-700), var(--navy-800) 70%);
+  background: linear-gradient(160deg, rgba(20, 40, 63, 0.87), rgba(14, 27, 44, 0.87) 70%);
   color: var(--white);
 }
 .section-sand {
-  background: var(--sand-100);
-  color: var(--ink);
+  background: rgba(16, 30, 48, 0.8);
+  color: var(--white);
 }
 .section-light {
-  background: var(--white);
-  color: var(--ink);
+  background: rgba(9, 17, 28, 0.72);
+  color: var(--white);
 }
 .section-cta-final {
-  /* Semi-transparent so the three.js desert scene shows through at the end */
-  background: linear-gradient(180deg, rgba(10, 20, 32, 0.94), rgba(10, 20, 32, 0.82));
+  background: linear-gradient(180deg, rgba(10, 20, 32, 0.9), rgba(10, 20, 32, 0.78));
   color: var(--white);
 }
 
@@ -247,6 +242,13 @@ p { margin: 0 0 1em; }
   background: transparent;
 }
 .btn-ghost-dark:hover { border-color: var(--copper-400); color: var(--copper-400); }
+
+.btn-navy {
+  background: var(--navy-700);
+  color: #fff;
+  border-color: var(--navy-600);
+}
+.btn-navy:hover { background: var(--navy-600); }
 
 .btn-lg { padding: 1em 1.8em; font-size: 1.15rem; }
 .btn-sm { padding: 0.55em 1.1em; font-size: 0.95rem; }
@@ -380,6 +382,18 @@ p { margin: 0 0 1em; }
   align-items: center;
 }
 
+/* Copy takes the left; the right stays open so the 3D world reads as
+   the hero visual (the road and branded truck sit right of center). */
+.hero-copy { max-width: 640px; }
+
+/* Keep hero copy legible over any part of the 3D world (e.g. the sun). */
+.hero h1,
+.hero .eyebrow,
+.hero-sub,
+.hero-points li {
+  text-shadow: 0 2px 22px rgba(10, 20, 32, 0.85), 0 1px 4px rgba(10, 20, 32, 0.7);
+}
+
 .hero-sub {
   font-size: clamp(1.05rem, 2.5vw, 1.3rem);
   color: rgba(255, 255, 255, 0.82);
@@ -419,26 +433,6 @@ p { margin: 0 0 1em; }
   transform: rotate(-45deg);
 }
 
-/* Hero van mockup */
-.hero-van { margin: 0; }
-
-.van-card {
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-  border: 1px solid var(--line-dark);
-  border-radius: var(--radius-lg);
-  padding: 24px 20px 16px;
-  backdrop-filter: blur(4px);
-  box-shadow: var(--shadow);
-}
-
-.van-caption {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
-  text-align: center;
-  padding-top: 10px;
-  font-style: italic;
-}
-
 .scroll-hint {
   position: absolute;
   bottom: 22px;
@@ -470,11 +464,14 @@ p { margin: 0 0 1em; }
 /* ---------- Cards ---------- */
 .card {
   background: var(--white);
+  color: var(--ink); /* cards stay solid light surfaces over the dark world */
   border-radius: var(--radius);
   padding: 28px 24px;
   box-shadow: var(--shadow);
   border: 1px solid var(--line-light);
 }
+
+.card-outline { color: inherit; } /* outline cards sit directly on the section */
 
 .section-dark .card,
 .section-navy .card,
@@ -529,6 +526,31 @@ p { margin: 0 0 1em; }
   border: 1px solid rgba(255, 255, 255, 0.35);
   color: rgba(255, 255, 255, 0.8);
 }
+
+.badge-navy { background: var(--navy-700); }
+
+/* ---------- Two-track chooser ---------- */
+.track-card {
+  display: flex;
+  flex-direction: column;
+}
+.track-card h3 { font-size: 1.7rem; }
+.track-card p { color: var(--ink-soft); }
+.track-card .checklist { margin: 0.6rem 0 1.6rem; flex: 1; }
+.track-card .checklist li { color: var(--ink); font-size: 0.98rem; }
+
+.hero-fork {
+  margin: -0.6rem 0 1.8rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+.hero-fork a {
+  color: var(--copper-400);
+  font-weight: 600;
+  text-decoration-color: rgba(217, 112, 46, 0.5);
+  text-underline-offset: 3px;
+}
+.hero-fork a:hover { color: var(--copper-500); }
 
 /* ---------- Problem section ---------- */
 .check-questions {
@@ -644,8 +666,9 @@ p { margin: 0 0 1em; }
   align-items: start;
 }
 
-.area-card { border-color: var(--line-light); }
-.area-card h3 { color: var(--copper-600); }
+.area-card { border-color: var(--line-dark); }
+.area-card h3 { color: var(--copper-400); }
+.area-list li { border-bottom-color: var(--line-dark); }
 
 .area-list {
   list-style: none;
@@ -741,6 +764,7 @@ p { margin: 0 0 1em; }
 
 .faq-item {
   background: var(--white);
+  color: var(--ink); /* stays a solid light surface over the dark world */
   border: 1px solid var(--line-light);
   border-radius: var(--radius);
   margin-bottom: 12px;
@@ -899,7 +923,7 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
 
 /* ---------- Footer ---------- */
 .site-footer {
-  background: var(--navy-900);
+  background: rgba(10, 20, 32, 0.9);
   color: rgba(255, 255, 255, 0.75);
   border-top: 1px solid var(--line-dark);
   padding: 56px 0 24px;
@@ -965,6 +989,7 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
 
   .form-row { grid-template-columns: 1fr 1fr; gap: 16px; }
 
+  .card-grid.two,
   .card-grid.three,
   .industries-grid,
   .packages-grid { grid-template-columns: repeat(2, 1fr); }
@@ -984,8 +1009,6 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
     gap: 22px;
   }
   .nav-toggle { display: none; }
-
-  .hero-inner { grid-template-columns: 1.15fr 1fr; }
 
   .card-grid.three { grid-template-columns: repeat(3, 1fr); }
   .industries-grid { grid-template-columns: repeat(3, 1fr); }
