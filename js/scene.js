@@ -4,12 +4,14 @@
 
    Instead of a treadmill, the world is one fixed place — a Sonoran Desert
    highway that runs from Deer Valley to downtown Phoenix — and scrolling
-   scrubs the camera along a cinematic spline through it: opening high over
-   the desert at dusk, swooping down behind a wrapped Valley Fleet Wraps
-   cargo van, drifting alongside it past saguaros, rising over the road as
-   downtown approaches, swinging wide around a Camelback-style ridge, and
-   pulling up over the lit city at night. Mouse movement adds a free-look
-   parallax so visitors can glance around the world at any point.
+   scrubs the camera along a cinematic spline through it, playing out a
+   Phoenix sunrise as it goes: opening in the pre-dawn dark behind a
+   wrapped Valley Fleet Wraps cargo van (stars out, city lights burning,
+   a faint ember glow on the horizon), the sun climbing out from behind
+   the mesas as the visitor scrolls, and full morning over downtown by
+   the end — stars gone, window lights winked out, sky warm and blue.
+   Mouse movement adds a free-look parallax so visitors can glance
+   around the world at any point.
 
    Palette: deep navy, copper, sand — matching the site.
 
@@ -40,11 +42,13 @@
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-  /* Palette (dusk value → night value where the scroll shifts it) */
-  var SKY_TOP_DUSK = new THREE.Color('#0e1b2c');
-  var SKY_TOP_NIGHT = new THREE.Color('#070e18');
-  var SKY_HORIZON_DUSK = new THREE.Color('#b35a24');
-  var SKY_HORIZON_NIGHT = new THREE.Color('#3a2118');
+  /* Palette (pre-dawn value → morning value; scroll drives the sunrise) */
+  var SKY_TOP_DAWN = new THREE.Color('#070e18');
+  var SKY_TOP_MORNING = new THREE.Color('#35597c');
+  var SKY_HORIZON_DAWN = new THREE.Color('#3a2114');
+  var SKY_HORIZON_MORNING = new THREE.Color('#f0a95c');
+  var SUN_DAWN = new THREE.Color('#e5854a');
+  var SUN_MORNING = new THREE.Color('#ffd9a0');
   var COPPER = new THREE.Color('#d9702e');
   var COPPER_LIGHT = new THREE.Color('#e5854a');
   var SAND = new THREE.Color('#f6f1e8');
@@ -53,8 +57,8 @@
   var SILHOUETTE = new THREE.Color('#182a40');
 
   var scene = new THREE.Scene();
-  scene.background = SKY_TOP_DUSK.clone();
-  scene.fog = new THREE.Fog(SKY_TOP_DUSK.clone(), 70, 260);
+  scene.background = SKY_TOP_DAWN.clone();
+  scene.fog = new THREE.Fog(SKY_TOP_DAWN.clone(), 70, 260);
 
   var camera = new THREE.PerspectiveCamera(60, 1, 0.1, 520);
 
@@ -71,18 +75,19 @@
 
   var skyMat = new THREE.ShaderMaterial({
     uniforms: {
-      top: { value: SKY_TOP_DUSK.clone() },
-      horizon: { value: SKY_HORIZON_DUSK.clone() }
+      top: { value: SKY_TOP_DAWN.clone() },
+      horizon: { value: SKY_HORIZON_DAWN.clone() },
+      band: { value: 0.16 } // warm horizon band; swells as the sun rises
     },
     vertexShader:
       'varying vec2 vUv;' +
       'void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
     fragmentShader:
-      'uniform vec3 top; uniform vec3 horizon; varying vec2 vUv;' +
+      'uniform vec3 top; uniform vec3 horizon; uniform float band; varying vec2 vUv;' +
       'void main(){' +
       '  float t = smoothstep(0.05, 0.55, vUv.y);' +
       '  vec3 c = mix(horizon, top, t);' +
-      '  c += vec3(0.85, 0.42, 0.16) * (1.0 - smoothstep(0.0, 0.22, vUv.y)) * 0.35;' +
+      '  c += vec3(0.85, 0.42, 0.16) * (1.0 - smoothstep(0.0, 0.22, vUv.y)) * band;' +
       '  gl_FragColor = vec4(c, 1.0);' +
       '}',
     depthWrite: false,
@@ -108,21 +113,23 @@
   var glowTex = makeGlowTexture();
 
   // The sun sits right of the road — the hero copy owns the left side.
+  // It starts below the mesa line (occluded by the ridge shapes) and
+  // climbs out as the visitor scrolls.
   var sun = new THREE.Mesh(
     new THREE.CircleGeometry(30, 48),
-    new THREE.MeshBasicMaterial({ color: COPPER_LIGHT, fog: false, transparent: true, opacity: 0.95 })
+    new THREE.MeshBasicMaterial({ color: SUN_DAWN.clone(), fog: false, transparent: true, opacity: 0.95 })
   );
-  sun.position.set(42, 30, -272);
+  sun.position.set(42, -12, -272);
   backdrop.add(sun);
 
   var sunGlow = new THREE.Mesh(
     new THREE.PlaneGeometry(150, 150),
     new THREE.MeshBasicMaterial({
-      map: glowTex, fog: false, transparent: true, opacity: 0.5,
+      map: glowTex, fog: false, transparent: true, opacity: 0.2,
       blending: THREE.AdditiveBlending, depthWrite: false
     })
   );
-  sunGlow.position.set(42, 30, -273);
+  sunGlow.position.set(42, -12, -273);
   backdrop.add(sunGlow);
 
   var cityGlow = new THREE.Mesh(
@@ -459,7 +466,7 @@
     palms.push(palm);
   }
 
-  /* ---------- The Valley of lights: sprawl glitter that appears at night ---------- */
+  /* ---------- The Valley of lights: pre-dawn sprawl glitter that fades at sunrise ---------- */
   var sprawlPositions = new Float32Array(420 * 3);
   for (var sp = 0; sp < 420; sp++) {
     sprawlPositions[sp * 3] = (Math.random() - 0.5) * 520;
@@ -584,7 +591,7 @@
       g.add(axle);
     });
 
-    // Taillights so the van reads at night from behind.
+    // Taillights so the van reads in the pre-dawn dark from behind.
     [-0.85, 0.85].forEach(function (lx) {
       var tail = new THREE.Mesh(
         new THREE.PlaneGeometry(0.26, 0.5),
@@ -667,7 +674,7 @@
     new THREE.Vector3(9, 14, -330),    // services/packages: rising over the highway
     new THREE.Vector3(0, 5, -440),     // service area/before: back down for the chase
     new THREE.Vector3(-24, 10, -520),  // process/faq: swinging wide around the ridge
-    new THREE.Vector3(0, 17, -590)     // contact: pulled up over downtown at night
+    new THREE.Vector3(0, 17, -590)     // contact: pulled up over downtown in full morning
   ]);
 
   var lookPath = new THREE.CatmullRomCurve3([
@@ -797,9 +804,10 @@
     if (leadVan.position.z > camPos.z - 22) leadVan.position.z = camPos.z - 22;
     leadVan.position.y = Math.sin(t * 6) * 0.03;
 
-    // Headlight pool rides just ahead of the van, brightening as night falls.
+    // Headlight pool rides just ahead of the van — strong in the pre-dawn
+    // dark, fading out as daylight takes over.
     headlightPool.position.z = leadVan.position.z - 12;
-    headlightPool.material.opacity = 0.06 + p * 0.12;
+    headlightPool.material.opacity = 0.05 + 0.13 * (1 - p);
 
     // Oncoming traffic heads back toward Deer Valley past you.
     oncoming.position.z += 0.5 + throttle * 1.2;
@@ -807,37 +815,42 @@
       oncoming.position.z = Math.max(camPos.z - 420, -680); // stay inside the world
     }
 
-    // Dusk → night across the whole journey.
-    sun.position.y = 30 - p * 26;
-    sun.scale.setScalar(1 + p * 0.35);
+    // Pre-dawn → sunrise → morning across the whole journey. The sun
+    // climbs out from behind the mesas, big and copper at the horizon,
+    // smaller and paler as it gains height.
+    sun.position.y = -12 + p * 54;
+    sun.scale.setScalar(1.35 - p * 0.3);
     sunGlow.position.y = sun.position.y;
-    sunGlow.scale.setScalar(1 + p * 0.5);
-    sun.material.opacity = 0.95 - p * 0.35;
-    sunGlow.material.opacity = (0.5 + Math.sin(t * 0.8) * 0.05) * (1 - p * 0.5);
+    sunGlow.scale.setScalar(1 + p * 0.4);
+    sun.material.color.lerpColors(SUN_DAWN, SUN_MORNING, p);
+    sunGlow.material.opacity = (0.2 + p * 0.4) + Math.sin(t * 0.8) * 0.04;
 
-    skyMat.uniforms.top.value.lerpColors(SKY_TOP_DUSK, SKY_TOP_NIGHT, p);
-    skyMat.uniforms.horizon.value.lerpColors(SKY_HORIZON_DUSK, SKY_HORIZON_NIGHT, p);
-    tmpColor.lerpColors(SKY_TOP_DUSK, SKY_TOP_NIGHT, p);
+    skyMat.uniforms.top.value.lerpColors(SKY_TOP_DAWN, SKY_TOP_MORNING, p);
+    skyMat.uniforms.horizon.value.lerpColors(SKY_HORIZON_DAWN, SKY_HORIZON_MORNING, p);
+    skyMat.uniforms.band.value = 0.16 + p * 0.4;
+    tmpColor.lerpColors(SKY_TOP_DAWN, SKY_TOP_MORNING, p);
     scene.background.copy(tmpColor);
     scene.fog.color.copy(tmpColor);
 
-    stars.material.opacity = 0.15 + p * 0.6;
-    cityGlow.material.opacity = p * 0.5;
-    cityGlow.scale.x = 1 + p * 0.3;
+    // The night side of the scene fades as morning arrives: stars wash
+    // out, downtown windows and the Valley's sprawl lights wink off.
+    stars.material.opacity = 0.75 * Math.max(0, 1 - p * 1.6);
+    cityGlow.material.opacity = 0.45 * (1 - p);
+    cityGlow.scale.x = 1.2;
     var i;
     for (i = 0; i < windowPlanes.length; i++) {
-      windowPlanes[i].material.opacity = Math.min(p * 1.4, 0.95);
+      windowPlanes[i].material.opacity = 0.95 * Math.max(0, 1 - p * 1.4);
     }
 
     dust.position.x = Math.sin(t * 0.1) * 6;
     stars.rotation.y = t * 0.002;
 
-    // Phoenix at night: antenna farm blinks, the Valley's sprawl lights up.
+    // Antenna farm keeps blinking but dims in daylight.
     for (i = 0; i < antennaLights.length; i++) {
       var blink = Math.sin(t * 1.6 + antennaLights[i].userData.phase);
-      antennaLights[i].material.opacity = (blink > 0 ? 0.85 : 0.15) * (0.35 + p * 0.65);
+      antennaLights[i].material.opacity = (blink > 0 ? 0.85 : 0.15) * (1 - p * 0.6);
     }
-    sprawl.material.opacity = p * 0.8;
+    sprawl.material.opacity = 0.8 * Math.max(0, 1 - p * 1.3);
 
     renderer.render(scene, camera);
   }

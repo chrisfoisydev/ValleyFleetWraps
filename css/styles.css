@@ -1172,12 +1172,11 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
   .footer-taglines { grid-column: auto; }
 }
 
-/* Very large nav breathing room — the phone number hides in the tight
-   range where nav links + CTA already fill the header. */
-@media (min-width: 900px) and (max-width: 1180px) {
-  .main-nav { gap: 14px; }
-  .main-nav a { font-size: 0.88rem; }
-  .main-nav .nav-phone { display: none; }
+/* With the trimmed link set the nav fits comfortably from 900px up, so
+   the phone number stays visible at every desktop width. */
+@media (min-width: 900px) and (max-width: 1080px) {
+  .main-nav { gap: 16px; }
+  .main-nav a { font-size: 0.9rem; }
 }
 
 /* ---------- Reduced motion ---------- */
