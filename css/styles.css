@@ -117,7 +117,8 @@ a { color: inherit; }
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, #0a1420 0%, #14283f 52%, #7a4526 88%, #b35a24 100%);
+  /* No-WebGL fallback: static pre-dawn sunrise stack (violet → plum → coral). */
+  background: linear-gradient(180deg, #0a0d1e 0%, #241634 50%, #6e2f4e 80%, #c96a5a 100%);
 }
 
 .site-header, main, .site-footer { position: relative; z-index: 1; }
