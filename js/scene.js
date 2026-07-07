@@ -92,8 +92,11 @@
   var ROUTE_END = -700;
 
   /* ---------- Backdrop that keeps its distance (sky, sun, mesas) ----------
-     The horizon set slides along with the camera so it always sits ~250
-     units ahead, exactly like a real horizon never getting closer. */
+     The horizon set slides along with the camera so it always sits ahead,
+     exactly like a real horizon never getting closer. Its planes live at
+     ~430-470 units out — farther than any fixed scenery ever gets from the
+     camera (downtown is ≤430 away once it's inside the fog/draw range) —
+     so plain depth testing keeps the sun behind buildings and mountains. */
   var backdrop = new THREE.Group();
   scene.add(backdrop);
 
@@ -118,8 +121,8 @@
     depthWrite: false,
     fog: false
   });
-  var sky = new THREE.Mesh(new THREE.PlaneGeometry(1200, 380), skyMat);
-  sky.position.set(0, 50, -280);
+  var sky = new THREE.Mesh(new THREE.PlaneGeometry(2000, 640), skyMat);
+  sky.position.set(0, 84, -470);
   backdrop.add(sky);
 
   // Soft radial glow sprite — hard-edged circles read as flat discs.
@@ -144,31 +147,31 @@
   // It starts below the mesa line (occluded by the ridge shapes) and
   // climbs out as the visitor scrolls.
   var sun = new THREE.Mesh(
-    new THREE.CircleGeometry(30, 48),
+    new THREE.CircleGeometry(50, 48),
     new THREE.MeshBasicMaterial({ color: SUN_DAWN.clone(), fog: false, transparent: true, opacity: 0.95 })
   );
-  sun.position.set(42, -12, -272);
+  sun.position.set(70, -20, -455);
   backdrop.add(sun);
 
   var sunGlow = new THREE.Mesh(
-    new THREE.PlaneGeometry(150, 150),
+    new THREE.PlaneGeometry(250, 250),
     new THREE.MeshBasicMaterial({
       map: glowTex, fog: false, transparent: true, opacity: 0.2,
       blending: THREE.AdditiveBlending, depthWrite: false
     })
   );
-  sunGlow.position.set(42, -12, -273);
+  sunGlow.position.set(70, -20, -456);
   backdrop.add(sunGlow);
 
   var cityGlow = new THREE.Mesh(
-    new THREE.PlaneGeometry(170, 170),
+    new THREE.PlaneGeometry(280, 280),
     new THREE.MeshBasicMaterial({
       map: glowTex, fog: false, transparent: true, opacity: 0,
       blending: THREE.AdditiveBlending, depthWrite: false
     })
   );
   cityGlow.scale.y = 0.16;
-  cityGlow.position.set(20, 10, -266);
+  cityGlow.position.set(33, 17, -450);
   backdrop.add(cityGlow);
 
   function ridgeMesh(points, color, z) {
@@ -189,13 +192,15 @@
   var ridgeFar = ridgeMesh([
     [-560, 5], [-420, 6], [-350, 24], [-190, 25], [-130, 7], [-60, 6],
     [-10, 22], [150, 23], [205, 8], [280, 7], [330, 27], [460, 26], [560, 9]
-  ], MESA_FAR, -264);
+  ], MESA_FAR, -435);
+  ridgeFar.scale.set(1.7, 1.65, 1);
   backdrop.add(ridgeFar);
 
   var ridgeNear = ridgeMesh([
     [-560, 2], [-380, 3], [-290, 13], [-215, 8], [-160, 15], [-95, 4],
     [0, 3], [90, 11], [230, 12], [300, 3], [560, 4]
-  ], MESA_NEAR, -258);
+  ], MESA_NEAR, -428);
+  ridgeNear.scale.set(1.7, 1.65, 1);
   backdrop.add(ridgeNear);
 
   /* ---------- Ground, highway, and center line (static, full route) ---------- */
@@ -686,11 +691,17 @@
     }));
   }
 
-  var stars = makePoints(320, 460, 60, 170, 0.7, SAND, 0.15);
+  // Stars sit in the deep backdrop band so scenery always occludes them.
+  var stars = makePoints(320, 800, 100, 300, 1.1, SAND, 0.15);
+  var starPos = stars.geometry.attributes.position;
+  for (var st = 0; st < starPos.count; st++) {
+    starPos.setZ(st, -270 - Math.random() * 190);
+  }
   backdrop.add(stars);
   var dust = makePoints(120, 240, 1, 14, 0.5, COPPER_LIGHT, 0.3);
   dust.material.fog = true;
   backdrop.add(dust);
+
 
   /* =========================================================
      THE CAMERA JOURNEY — a spline through the world, scrubbed
@@ -848,9 +859,9 @@
     // Pre-dawn → sunrise → morning across the whole journey. The sun
     // climbs out from behind the mesas — big and coral at the horizon,
     // smaller and paler as it gains height — and is fully above the
-    // ridge line (~27 units) by about three-quarters down the page.
+    // ridge line (~45 units) by about three-quarters down the page.
     var sunRise = Math.min(1, p * 1.35);
-    sun.position.y = -12 + sunRise * 78;
+    sun.position.y = -20 + sunRise * 130;
     sun.scale.setScalar(1.35 - sunRise * 0.3);
     sunGlow.position.y = sun.position.y;
     sunGlow.scale.setScalar(1 + p * 0.4);
