@@ -11,8 +11,15 @@
   <meta property="og:title" content="Valley Fleet Wraps | Commercial Fleet Wraps Across the Phoenix Valley">
   <meta property="og:description" content="Your trucks should make the phone ring. Fleet wraps for Arizona service companies that want to look bigger, cleaner, and easier to remember.">
   <meta property="og:type" content="website">
-  <!-- TODO: Add og:image once brand photography exists, e.g. <meta property="og:image" content="/assets/img/og-fleet.jpg"> -->
-  <link rel="canonical" href="https://valleyfleetwraps.com/"> <!-- TODO: replace with live domain -->
+  <meta property="og:url" content="https://valleyfleetwraps.com/">
+  <meta property="og:image" content="https://valleyfleetwraps.com/assets/img/og-fleet.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://valleyfleetwraps.com/assets/img/og-fleet.jpg">
+  <!-- Confirm this matches the live domain before launch (also referenced in
+       robots.txt and sitemap.xml). -->
+  <link rel="canonical" href="https://valleyfleetwraps.com/">
 
   <!-- Local business structured data for local SEO -->
   <script type="application/ld+json">
@@ -20,6 +27,7 @@
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Valley Fleet Wraps",
+    "url": "https://valleyfleetwraps.com/",
     "description": "Commercial fleet wraps, service van graphics, truck wraps, and fleet branding for service businesses across the Phoenix Valley.",
     "areaServed": ["Phoenix", "Deer Valley", "Glendale", "Peoria", "Scottsdale", "Mesa", "Tempe", "Chandler", "Gilbert", "Queen Creek", "Cave Creek", "Anthem", "Surprise", "Goodyear", "Avondale"],
     "address": {
@@ -28,8 +36,98 @@
       "addressRegion": "AZ",
       "addressCountry": "US"
     },
-    "telephone": "+1-602-000-0000",
+    "telephone": "+1-480-788-8859",
     "priceRange": "$$"
+  }
+  </script>
+
+  <!-- FAQ structured data — keep in sync with the visible #faq section. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much does a commercial fleet wrap cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on vehicle type, wrap coverage, and fleet size. Lettering packages cost less than partial wraps, and partial wraps cost less than full wraps. Send photos of your vehicles and we'll give you a clear quote — no obligation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a full wrap or partial wrap?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not every fleet needs full coverage. Many service businesses get excellent results from a well-designed partial wrap or lettering system. Your free audit includes a recommendation based on your vehicles and budget."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you match our existing brand?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We work from your logo, colors, and any brand guidelines you have. If your brand needs cleanup to work well at vehicle scale, we'll tell you exactly what to adjust."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you wrap one vehicle first and the rest later?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, and we recommend it for many fleets. We build your layout as a template, so every future vehicle matches the first one."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does installation take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most vans and trucks take 1–3 days depending on coverage. For fleets, we schedule vehicles in phases so your crews stay on the road."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you wrap trailers and box trucks?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Trailers and box trucks are some of the best advertising surfaces a service business owns — large, flat, and highly visible in traffic and on job sites."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What information should be on a service vehicle?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "At minimum: your service category, phone number, company name, and service area. License numbers where required. The goal is that a homeowner can understand what you do and how to reach you in about three seconds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you help redesign an outdated fleet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — that's exactly what our Fleet Refresh package is for. We audit what you have, recommend a cleaner system, and phase the updates so you're never off the road."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you work with new businesses?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. A professional wrap on day one helps a new company look established from the first service call."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you serve the whole Valley?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We're based in Deer Valley and work with fleets everywhere in Greater Phoenix — Glendale, Peoria, Scottsdale, Mesa, Tempe, Chandler, Gilbert, Queen Creek, Surprise, Goodyear, and everywhere between. If your trucks drive the Valley, we'll come to you."
+        }
+      }
+    ]
   }
   </script>
 
@@ -44,8 +142,9 @@
 </head>
 <body>
 
-  <!-- Fixed WebGL canvas: desert-road scene rendered by js/scene.js (three.js).
-       Visible behind the hero and final CTA; solid sections cover it mid-page. -->
+  <!-- Fixed WebGL canvas: scroll-driven drive through Phoenix rendered by
+       js/scene.js (three.js). Sections float over it as translucent panels,
+       so the scene stays visible down the entire page. -->
   <canvas id="scene-canvas" aria-hidden="true"></canvas>
 
   <!-- ================= HEADER ================= -->
@@ -56,15 +155,14 @@
         <span class="brand-name">Valley <strong>Fleet Wraps</strong></span>
       </a>
 
+      <!-- Kept deliberately sparse — every section is one scroll away, and
+           the footer nav carries the full list of destinations. -->
       <nav class="main-nav" id="main-nav" aria-label="Main navigation">
-        <a href="#audit">Free Audit</a>
         <a href="#services">Services</a>
-        <a href="#industries">Industries</a>
         <a href="#packages">Packages</a>
-        <a href="#process">Process</a>
-        <a href="#service-area">Service Area</a>
         <a href="#faq">FAQs</a>
-        <a href="#contact" class="btn btn-primary btn-sm nav-cta">Get a Free Fleet Visibility Audit</a>
+        <a href="tel:+14807888859" class="nav-phone">(480) 788-8859</a>
+        <a href="#contact" class="btn btn-primary btn-sm nav-cta">Get a Free Audit</a>
       </nav>
 
       <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle menu">
@@ -85,7 +183,7 @@
 
           <div class="hero-ctas" data-hero-item>
             <a href="#contact" class="btn btn-primary btn-lg">Get a Free Fleet Visibility Audit</a>
-            <a href="#services" class="btn btn-ghost btn-lg">View Fleet Wrap Services</a>
+            <a href="#services" class="hero-link">View fleet wrap services <span aria-hidden="true">&rarr;</span></a>
           </div>
 
           <p class="hero-fork" data-hero-item>Never been wrapped? Wrapped but dated? <a href="#tracks">Pick your track</a></p>
@@ -127,33 +225,22 @@
         <div class="section-head narrow">
           <p class="eyebrow" data-reveal>Two Tracks</p>
           <h2 data-reveal>First wrap or rewrap &mdash; there's a lane for you.</h2>
-          <p class="lead" data-reveal>Some fleets are starting from plain white. Others are wearing graphics that no longer earn their keep. We built a process for both.</p>
         </div>
 
-        <div class="card-grid two" data-reveal-group>
-          <article class="card track-card">
-            <span class="badge">Track 1 · First-Time Wrap</span>
+        <div class="track-grid" data-reveal-group>
+          <a href="#contact" class="track-option track-cta" data-track="unwrapped">
+            <span class="track-num" aria-hidden="true">01</span>
             <h3>My trucks aren't wrapped yet</h3>
             <p>Plain vehicles are invisible vehicles. We take you from blank panels to a brand system built for the road.</p>
-            <ul class="checklist">
-              <li>Start with one vehicle or the whole fleet</li>
-              <li>Layout templates so every future truck matches</li>
-              <li>Look established from the first service call</li>
-            </ul>
-            <a href="#contact" class="btn btn-primary track-cta" data-track="unwrapped">Start My First-Wrap Audit</a>
-          </article>
+            <span class="track-go">Start my first-wrap audit &rarr;</span>
+          </a>
 
-          <article class="card track-card">
-            <span class="badge badge-navy">Track 2 · Rewrap &amp; Refresh</span>
-            <h3>My fleet is wrapped &mdash; but it needs a redo</h3>
-            <p>Faded vinyl, an old logo, a phone number nobody can read, or five trucks with five different looks &mdash; we audit what you have and phase in a cleaner system.</p>
-            <ul class="checklist">
-              <li>Honest audit of your current graphics</li>
-              <li>Redesign focused on readability and consistency</li>
-              <li>Phased removal and reinstall &mdash; your trucks stay on the road</li>
-            </ul>
-            <a href="#contact" class="btn btn-navy track-cta" data-track="rewrap">Plan My Rewrap</a>
-          </article>
+          <a href="#contact" class="track-option track-cta" data-track="rewrap">
+            <span class="track-num" aria-hidden="true">02</span>
+            <h3>Wrapped &mdash; but it needs a redo</h3>
+            <p>Faded vinyl, an old logo, or five trucks with five looks &mdash; we audit what you have and phase in a cleaner system.</p>
+            <span class="track-go">Plan my rewrap &rarr;</span>
+          </a>
         </div>
       </div>
     </section>
@@ -191,6 +278,11 @@
           </article>
         </div>
       </div>
+    </section>
+
+    <!-- Scene break: a clear stretch of road, letting the 3D drive breathe. -->
+    <section class="scene-break" aria-label="Deer Valley to Downtown — one drive, hundreds of impressions">
+      <p class="scene-break-line" data-reveal>Deer Valley to Downtown &mdash;<br><span class="accent">one drive, hundreds of impressions.</span></p>
     </section>
 
     <!-- ================= FREE AUDIT ================= -->
@@ -253,31 +345,13 @@
             <p>Your truck sits in front of pool homes all day. Neighbors with pools are your next customers.</p>
           </article>
           <article class="card industry-card">
-            <span class="badge">Garage Door</span>
-            <h3>Garage Door Company Wraps</h3>
-            <p>Emergency calls go to the name people can recall — a readable truck keeps you top of mind.</p>
-          </article>
-          <article class="card industry-card">
-            <span class="badge">Roofing</span>
-            <h3>Roofing &amp; Restoration Wraps</h3>
-            <p>After a storm, every truck on the block is competing. A trustworthy fleet wins the knock on the door.</p>
-          </article>
-          <article class="card industry-card">
-            <span class="badge">Solar</span>
-            <h3>Solar Installer Fleet Wraps</h3>
-            <p>Solar is a big-ticket decision — a polished fleet builds the credibility the sale depends on.</p>
-          </article>
-          <article class="card industry-card">
             <span class="badge">Landscaping</span>
             <h3>Landscaping Truck &amp; Trailer Graphics</h3>
             <p>Trucks and trailers parked curbside are seen by every neighbor — turn parked time into advertising time.</p>
           </article>
-          <article class="card industry-card">
-            <span class="badge">Mobile Service</span>
-            <h3>Mobile Service Vehicle Wraps</h3>
-            <p>If your business drives to the customer, your vehicle is your storefront — make it easy to read and remember.</p>
-          </article>
         </div>
+
+        <p class="industries-more" data-reveal>Also wrapping garage door, roofing &amp; restoration, solar, property maintenance, and every other mobile service fleet that drives to the customer.</p>
       </div>
     </section>
 
@@ -392,6 +466,11 @@
       </div>
     </section>
 
+    <!-- Scene break: open road before the service-area pitch. -->
+    <section class="scene-break" aria-label="Look bigger. Drive cleaner. Get remembered.">
+      <p class="scene-break-line" data-reveal>Look bigger. Drive cleaner.<br><span class="accent">Get remembered.</span></p>
+    </section>
+
     <!-- ================= WHY DEER VALLEY / SERVICE AREA ================= -->
     <section class="section section-sand" id="service-area">
       <div class="container area-grid">
@@ -417,8 +496,10 @@
       </div>
     </section>
 
-    <!-- ================= BEFORE / AFTER ================= -->
-    <section class="section section-light" id="before-after">
+    <!-- ================= BEFORE / AFTER =================
+         Hidden until real before/after photos exist — remove the `hidden`
+         attribute below and swap in the photos to restore this section. -->
+    <section class="section section-light" id="before-after" hidden>
       <div class="container">
         <div class="section-head narrow">
           <p class="eyebrow" data-reveal>Before &amp; After</p>
@@ -580,129 +661,146 @@
              • Airtable: POST the serialized fields to an Airtable automation webhook.
              • Email:    services like Formspree/Basin work by setting action="https://formspree.io/f/XXXX".
         -->
+        <!-- Two-step form: step 1 captures the lead (name + phone), step 2
+             collects fleet details. Only name and phone are required. -->
         <form class="lead-form card" id="lead-form" novalidate data-reveal>
           <h3>Request My Free Audit</h3>
-
-          <fieldset class="form-field">
-            <legend>Where is your fleet today?</legend>
-            <div class="chip-group">
-              <label class="chip"><input type="radio" name="fleet_status" value="Not wrapped yet"> Not wrapped yet</label>
-              <label class="chip"><input type="radio" name="fleet_status" value="Partial / inconsistent"> Partial or inconsistent</label>
-              <label class="chip"><input type="radio" name="fleet_status" value="Wrapped - needs a redo"> Wrapped &mdash; needs a redo</label>
-            </div>
-          </fieldset>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
-              <input type="text" id="f-name" name="name" autocomplete="name" required>
-            </div>
-            <div class="form-field">
-              <label for="f-business">Business name <span class="req" aria-hidden="true">*</span></label>
-              <input type="text" id="f-business" name="business" autocomplete="organization" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
-              <input type="email" id="f-email" name="email" autocomplete="email" required>
-            </div>
-            <div class="form-field">
-              <label for="f-phone">Phone <span class="req" aria-hidden="true">*</span></label>
-              <input type="tel" id="f-phone" name="phone" autocomplete="tel" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label for="f-industry">Industry</label>
-              <select id="f-industry" name="industry">
-                <option value="">Select your industry…</option>
-                <option>HVAC</option>
-                <option>Plumbing</option>
-                <option>Electrical</option>
-                <option>Pest Control</option>
-                <option>Pool Service</option>
-                <option>Garage Door</option>
-                <option>Roofing / Restoration</option>
-                <option>Solar</option>
-                <option>Landscaping</option>
-                <option>Property Maintenance</option>
-                <option>Other Mobile Service</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label for="f-count">Number of vehicles</label>
-              <select id="f-count" name="vehicle_count">
-                <option value="">How many vehicles?</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3–5</option>
-                <option>6–10</option>
-                <option>11–25</option>
-                <option>25+</option>
-              </select>
-            </div>
-          </div>
-
-          <fieldset class="form-field">
-            <legend>Vehicle types</legend>
-            <div class="chip-group">
-              <label class="chip"><input type="checkbox" name="vehicle_types" value="Van"> Van</label>
-              <label class="chip"><input type="checkbox" name="vehicle_types" value="Truck"> Truck</label>
-              <label class="chip"><input type="checkbox" name="vehicle_types" value="Trailer"> Trailer</label>
-              <label class="chip"><input type="checkbox" name="vehicle_types" value="Box Truck"> Box truck</label>
-              <label class="chip"><input type="checkbox" name="vehicle_types" value="Mixed Fleet"> Mixed fleet</label>
-            </div>
-          </fieldset>
-
-          <div class="form-field">
-            <label for="f-need">What do you need?</label>
-            <select id="f-need" name="need">
-              <option value="">Select an option…</option>
-              <option value="full">Full wrap</option>
-              <option value="partial">Partial wrap</option>
-              <option value="lettering">Lettering</option>
-              <option value="refresh">Fleet refresh</option>
-              <option value="new-vehicle">New vehicle</option>
-              <option value="not-sure">Not sure yet</option>
-            </select>
-          </div>
-
-          <!-- PHOTO UPLOAD: enable once you have file handling (e.g., a form service
-               that supports attachments, or a Zapier/Airtable upload step). -->
-          <div class="form-field upload-placeholder" aria-label="Photo upload coming soon">
-            <span class="upload-icon" aria-hidden="true">📷</span>
-            <div>
-              <strong>Photo upload coming soon</strong>
-              <p>For now, just submit the form — we'll reply with an email address where you can send vehicle photos.</p>
-            </div>
-          </div>
-
-          <div class="form-field">
-            <label for="f-message">Message</label>
-            <textarea id="f-message" name="message" rows="4" placeholder="Tell us about your fleet, timeline, or current graphics…"></textarea>
-          </div>
-
-          <fieldset class="form-field">
-            <legend>Preferred contact method</legend>
-            <div class="chip-group">
-              <label class="chip"><input type="radio" name="contact_method" value="Phone" checked> Phone</label>
-              <label class="chip"><input type="radio" name="contact_method" value="Email"> Email</label>
-              <label class="chip"><input type="radio" name="contact_method" value="Text"> Text</label>
-            </div>
-          </fieldset>
+          <p class="form-step-label" id="form-step-label">Step 1 of 2 &middot; How do we reach you?</p>
 
           <p class="form-error" id="form-error" role="alert" hidden>Please fill in the highlighted fields so we can reach you.</p>
           <p class="form-success" id="form-success" role="status" hidden>Thanks — your audit request is in. We'll reach out within one business day.</p>
 
-          <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Free Audit</button>
-          <p class="fine-print">Free audit. No obligation. We respond within one business day.</p>
+          <div id="form-step-1">
+            <fieldset class="form-field">
+              <legend>Where is your fleet today?</legend>
+              <div class="chip-group">
+                <label class="chip"><input type="radio" name="fleet_status" value="Not wrapped yet"> Not wrapped yet</label>
+                <label class="chip"><input type="radio" name="fleet_status" value="Partial / inconsistent"> Partial or inconsistent</label>
+                <label class="chip"><input type="radio" name="fleet_status" value="Wrapped - needs a redo"> Wrapped &mdash; needs a redo</label>
+              </div>
+            </fieldset>
+
+            <div class="form-field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="f-name" name="name" autocomplete="name" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="f-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+                <input type="tel" id="f-phone" name="phone" autocomplete="tel" required>
+              </div>
+              <div class="form-field">
+                <label for="f-email">Email</label>
+                <input type="email" id="f-email" name="email" autocomplete="email">
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="form-next">Continue &rarr;</button>
+            <p class="fine-print">Takes about a minute. No cost, no obligation.</p>
+          </div>
+
+          <div id="form-step-2" hidden>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="f-business">Business name</label>
+                <input type="text" id="f-business" name="business" autocomplete="organization">
+              </div>
+              <div class="form-field">
+                <label for="f-industry">Industry</label>
+                <select id="f-industry" name="industry">
+                  <option value="">Select your industry…</option>
+                  <option>HVAC</option>
+                  <option>Plumbing</option>
+                  <option>Electrical</option>
+                  <option>Pest Control</option>
+                  <option>Pool Service</option>
+                  <option>Garage Door</option>
+                  <option>Roofing / Restoration</option>
+                  <option>Solar</option>
+                  <option>Landscaping</option>
+                  <option>Property Maintenance</option>
+                  <option>Other Mobile Service</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="f-count">Number of vehicles</label>
+                <select id="f-count" name="vehicle_count">
+                  <option value="">How many vehicles?</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3–5</option>
+                  <option>6–10</option>
+                  <option>11–25</option>
+                  <option>25+</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="f-need">What do you need?</label>
+                <select id="f-need" name="need">
+                  <option value="">Select an option…</option>
+                  <option value="full">Full wrap</option>
+                  <option value="partial">Partial wrap</option>
+                  <option value="lettering">Lettering</option>
+                  <option value="refresh">Fleet refresh</option>
+                  <option value="new-vehicle">New vehicle</option>
+                  <option value="not-sure">Not sure yet</option>
+                </select>
+              </div>
+            </div>
+
+            <fieldset class="form-field">
+              <legend>Vehicle types</legend>
+              <div class="chip-group">
+                <label class="chip"><input type="checkbox" name="vehicle_types" value="Van"> Van</label>
+                <label class="chip"><input type="checkbox" name="vehicle_types" value="Truck"> Truck</label>
+                <label class="chip"><input type="checkbox" name="vehicle_types" value="Trailer"> Trailer</label>
+                <label class="chip"><input type="checkbox" name="vehicle_types" value="Box Truck"> Box truck</label>
+                <label class="chip"><input type="checkbox" name="vehicle_types" value="Mixed Fleet"> Mixed fleet</label>
+              </div>
+            </fieldset>
+
+            <div class="form-field">
+              <label for="f-message">Message</label>
+              <textarea id="f-message" name="message" rows="3" placeholder="Tell us about your fleet, timeline, or current graphics…"></textarea>
+            </div>
+
+            <fieldset class="form-field">
+              <legend>Preferred contact method</legend>
+              <div class="chip-group">
+                <label class="chip"><input type="radio" name="contact_method" value="Phone" checked> Phone</label>
+                <label class="chip"><input type="radio" name="contact_method" value="Email"> Email</label>
+                <label class="chip"><input type="radio" name="contact_method" value="Text"> Text</label>
+              </div>
+            </fieldset>
+
+            <!-- PHOTO UPLOAD: enable once you have file handling (e.g., a form service
+                 that supports attachments, or a Zapier/Airtable upload step). -->
+            <div class="form-field upload-placeholder" aria-label="Photo upload coming soon">
+              <span class="upload-icon" aria-hidden="true">📷</span>
+              <div>
+                <strong>Photo upload coming soon</strong>
+                <p>For now, just submit the form — we'll reply with an email address where you can send vehicle photos.</p>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Free Audit</button>
+            <button type="button" class="form-back" id="form-back">&larr; Back to contact info</button>
+            <p class="fine-print">Free audit. No obligation. We respond within one business day.</p>
+          </div>
         </form>
       </div>
     </section>
   </main>
+
+  <!-- Sticky call/audit bar — mobile only (hidden ≥900px where the full nav shows). -->
+  <div class="mobile-cta-bar">
+    <a href="tel:+14807888859">Call (480) 788-8859</a>
+    <a href="#contact" class="mob-audit">Free Audit</a>
+  </div>
 
   <!-- ================= FOOTER ================= -->
   <footer class="site-footer">
@@ -732,8 +830,7 @@
 
       <div class="footer-col">
         <h4>Contact</h4>
-        <!-- TODO: replace placeholders with real contact details -->
-        <p><a href="tel:+16020000000">(602) 000-0000</a></p>
+        <p><a href="tel:+14807888859">(480) 788-8859</a></p>
         <p><a href="mailto:hello@valleyfleetwraps.com">hello@valleyfleetwraps.com</a></p>
         <p>Deer Valley, Phoenix, AZ<br><em>Street address coming soon</em></p>
       </div>
@@ -757,12 +854,37 @@
        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
   -->
 
-  <!-- three.js (r128 global build) + GSAP + ScrollTrigger — vendored locally for
-       speed and reliability (no CDN dependency). Sourced from npm: three@0.128.0, gsap@3.12.5 -->
-  <script src="js/vendor/three.min.js" defer></script>
-  <script src="js/vendor/gsap.min.js" defer></script>
-  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
-  <script src="js/scene.js" defer></script>
+  <!-- main.js (nav, form) loads immediately so the page is interactive right
+       away; it works with or without GSAP. -->
   <script src="js/main.js" defer></script>
+
+  <!-- three.js (r128 global build) + GSAP + ScrollTrigger — vendored locally
+       (npm: three@0.128.0, gsap@3.12.5). Loaded AFTER the window load event so
+       the ~700 KB animation stack never competes with content for bandwidth
+       (LCP / Core Web Vitals). The CSS gradient covers the canvas until then,
+       and main.js picks up GSAP via the vfw:vendor-ready event. -->
+  <script>
+  (function () {
+    function loadSequentially(sources, done) {
+      if (!sources.length) { done(); return; }
+      var s = document.createElement('script');
+      s.src = sources[0];
+      s.onload = s.onerror = function () { loadSequentially(sources.slice(1), done); };
+      document.body.appendChild(s);
+    }
+    function loadStack() {
+      loadSequentially([
+        'js/vendor/three.min.js',
+        'js/vendor/gsap.min.js',
+        'js/vendor/ScrollTrigger.min.js',
+        'js/scene.js'
+      ], function () {
+        window.dispatchEvent(new Event('vfw:vendor-ready'));
+      });
+    }
+    if (document.readyState === 'complete') loadStack();
+    else window.addEventListener('load', loadStack);
+  })();
+  </script>
 </body>
 </html>

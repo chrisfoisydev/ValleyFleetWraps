@@ -74,8 +74,8 @@ The form shows a **"Photo upload coming soon"** placeholder (`.upload-placeholde
 | Placeholder | Where | Replace with |
 |---|---|---|
 | Hero van mockup (SVG) | `index.html` → `.hero-van` | Real photo of a wrapped van: `<img src="assets/img/hero-van.jpg" alt="Wrapped HVAC service van in North Phoenix">` |
-| Before/after boxes | `index.html` → `#before-after` → `.ba-placeholder` | Real before/after photos with descriptive alt text |
-| Phone number | Footer + JSON-LD (`+1-602-000-0000`) | Real business number (update both `tel:` link and visible text) |
+| Before/after boxes | `index.html` → `#before-after` → `.ba-placeholder` | Real before/after photos with descriptive alt text (section is `hidden` until then) |
+| Phone number | Header, footer, mobile call bar, JSON-LD, van wrap textures | Set to (480) 788-8859 — update everywhere at once if it changes |
 | Email | Footer (`hello@valleyfleetwraps.com`) | Real email |
 | Street address | Footer ("Street address coming soon") + JSON-LD `address` | Real address |
 | Canonical URL | `<link rel="canonical">` | Live domain |

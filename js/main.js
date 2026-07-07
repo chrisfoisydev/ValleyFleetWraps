@@ -91,11 +91,16 @@
 
   /* =========================================================
      GSAP scroll animations
-     ========================================================= */
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
+     =========================================================
+     GSAP loads lazily after the window load event (see index.html), so
+     this either runs immediately (GSAP already present) or waits for the
+     loader's vfw:vendor-ready event. Content is fully visible without it —
+     gsap.from() only adds the entrance motion. */
+  function initScrollAnimations() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || prefersReducedMotion) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero: staggered entrance for copy, van slides in from the right.
+    // Hero: staggered entrance for the copy.
     gsap.from('[data-hero-item]', {
       y: 36,
       opacity: 0,
@@ -135,7 +140,12 @@
         }
       });
     });
+  }
 
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    initScrollAnimations();
+  } else {
+    window.addEventListener('vfw:vendor-ready', initScrollAnimations);
   }
 
   /* =========================================================
@@ -156,24 +166,63 @@
   var errorEl = document.getElementById('form-error');
   var successEl = document.getElementById('form-success');
 
-  function validate() {
+  /* Two-step flow: step 1 is the lead (name + phone), step 2 the details. */
+  var step1 = document.getElementById('form-step-1');
+  var step2 = document.getElementById('form-step-2');
+  var stepLabel = document.getElementById('form-step-label');
+  var nextBtn = document.getElementById('form-next');
+  var backBtn = document.getElementById('form-back');
+
+  function setStep(n) {
+    step1.hidden = n !== 1;
+    step2.hidden = n !== 2;
+    stepLabel.textContent = n === 1
+      ? 'Step 1 of 2 · How do we reach you?'
+      : 'Step 2 of 2 · Tell us about your fleet';
+  }
+
+  function fieldValid(field) {
+    var value = field.value.trim();
+    if (field.hasAttribute('required') && value === '') return false;
+    if (value !== '' && field.type === 'email') {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+    if (value !== '' && field.type === 'tel') {
+      return value.replace(/\D/g, '').length >= 10;
+    }
+    return true;
+  }
+
+  // Validates text-like fields within a step (or the whole form).
+  function validate(scope) {
     var valid = true;
-    form.querySelectorAll('[required]').forEach(function (field) {
-      var value = field.value.trim();
-      var fieldValid = value !== '';
-
-      if (fieldValid && field.type === 'email') {
-        fieldValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      }
-      if (fieldValid && field.type === 'tel') {
-        fieldValid = value.replace(/\D/g, '').length >= 10;
-      }
-
-      field.classList.toggle('is-invalid', !fieldValid);
-      if (!fieldValid) valid = false;
+    scope.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]').forEach(function (field) {
+      var ok = fieldValid(field);
+      field.classList.toggle('is-invalid', !ok);
+      if (!ok) valid = false;
     });
     return valid;
   }
+
+  function showFirstInvalid(scope) {
+    var firstInvalid = scope.querySelector('.is-invalid');
+    if (firstInvalid) firstInvalid.focus();
+  }
+
+  nextBtn.addEventListener('click', function () {
+    errorEl.hidden = true;
+    if (!validate(step1)) {
+      errorEl.hidden = false;
+      showFirstInvalid(step1);
+      return;
+    }
+    setStep(2);
+  });
+
+  backBtn.addEventListener('click', function () {
+    errorEl.hidden = true;
+    setStep(1);
+  });
 
   // Clear invalid state as the visitor fixes a field.
   form.addEventListener('input', function (e) {
@@ -187,10 +236,11 @@
     errorEl.hidden = true;
     successEl.hidden = true;
 
-    if (!validate()) {
+    if (!validate(form)) {
       errorEl.hidden = false;
-      var firstInvalid = form.querySelector('.is-invalid');
-      if (firstInvalid) firstInvalid.focus();
+      // A required field lives on step 1 — bring the visitor back to it.
+      if (step1.querySelector('.is-invalid')) setStep(1);
+      showFirstInvalid(form);
       return;
     }
 
@@ -239,6 +289,7 @@
 
     function showSuccess() {
       form.reset();
+      setStep(1);
       successEl.hidden = false;
       successEl.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
     }
