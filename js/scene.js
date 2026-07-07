@@ -42,19 +42,23 @@
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-  /* Palette (pre-dawn value → morning value; scroll drives the sunrise) */
-  var SKY_TOP_DAWN = new THREE.Color('#070e18');
-  var SKY_TOP_MORNING = new THREE.Color('#35597c');
-  var SKY_HORIZON_DAWN = new THREE.Color('#3a2114');
-  var SKY_HORIZON_MORNING = new THREE.Color('#f0a95c');
-  var SUN_DAWN = new THREE.Color('#e5854a');
-  var SUN_MORNING = new THREE.Color('#ffd9a0');
+  /* Palette (pre-dawn value → morning value; scroll drives the sunrise).
+     The sky is a three-band Phoenix-sunrise stack: peach-gold right at
+     the horizon, rose pink above it, violet-to-periwinkle on top. */
+  var SKY_TOP_DAWN = new THREE.Color('#0a0d1e');
+  var SKY_TOP_MORNING = new THREE.Color('#54619e');
+  var SKY_MID_DAWN = new THREE.Color('#2a1633');
+  var SKY_MID_MORNING = new THREE.Color('#e88ca6');
+  var SKY_HORIZON_DAWN = new THREE.Color('#3a1c22');
+  var SKY_HORIZON_MORNING = new THREE.Color('#ffb489');
+  var SUN_DAWN = new THREE.Color('#ff8f6b');
+  var SUN_MORNING = new THREE.Color('#ffe3b8');
   var COPPER = new THREE.Color('#d9702e');
   var COPPER_LIGHT = new THREE.Color('#e5854a');
   var SAND = new THREE.Color('#f6f1e8');
-  var MESA_FAR = new THREE.Color('#1a2b40');
-  var MESA_NEAR = new THREE.Color('#0c1826');
-  var SILHOUETTE = new THREE.Color('#182a40');
+  var MESA_FAR = new THREE.Color('#241f3d');
+  var MESA_NEAR = new THREE.Color('#120e22');
+  var SILHOUETTE = new THREE.Color('#201a38');
 
   var scene = new THREE.Scene();
   scene.background = SKY_TOP_DAWN.clone();
@@ -76,6 +80,7 @@
   var skyMat = new THREE.ShaderMaterial({
     uniforms: {
       top: { value: SKY_TOP_DAWN.clone() },
+      mid: { value: SKY_MID_DAWN.clone() },
       horizon: { value: SKY_HORIZON_DAWN.clone() },
       band: { value: 0.16 } // warm horizon band; swells as the sun rises
     },
@@ -83,11 +88,11 @@
       'varying vec2 vUv;' +
       'void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
     fragmentShader:
-      'uniform vec3 top; uniform vec3 horizon; uniform float band; varying vec2 vUv;' +
+      'uniform vec3 top; uniform vec3 mid; uniform vec3 horizon; uniform float band; varying vec2 vUv;' +
       'void main(){' +
-      '  float t = smoothstep(0.05, 0.55, vUv.y);' +
-      '  vec3 c = mix(horizon, top, t);' +
-      '  c += vec3(0.85, 0.42, 0.16) * (1.0 - smoothstep(0.0, 0.22, vUv.y)) * band;' +
+      '  vec3 c = mix(horizon, mid, smoothstep(0.04, 0.30, vUv.y));' +
+      '  c = mix(c, top, smoothstep(0.30, 0.62, vUv.y));' +
+      '  c += vec3(0.92, 0.45, 0.32) * (1.0 - smoothstep(0.0, 0.22, vUv.y)) * band;' +
       '  gl_FragColor = vec4(c, 1.0);' +
       '}',
     depthWrite: false,
@@ -98,14 +103,17 @@
   backdrop.add(sky);
 
   // Soft radial glow sprite — hard-edged circles read as flat discs.
+  // Coral core fading through pink to a violet fringe, so the sun's halo
+  // carries the sunrise pinks into the sky around it.
   function makeGlowTexture() {
     var c = document.createElement('canvas');
     c.width = c.height = 128;
     var gctx = c.getContext('2d');
     var grad = gctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-    grad.addColorStop(0, 'rgba(229, 133, 74, 0.9)');
-    grad.addColorStop(0.35, 'rgba(217, 112, 46, 0.32)');
-    grad.addColorStop(1, 'rgba(217, 112, 46, 0)');
+    grad.addColorStop(0, 'rgba(255, 156, 124, 0.95)');
+    grad.addColorStop(0.35, 'rgba(233, 110, 128, 0.32)');
+    grad.addColorStop(0.7, 'rgba(190, 95, 150, 0.12)');
+    grad.addColorStop(1, 'rgba(150, 85, 170, 0)');
     gctx.fillStyle = grad;
     gctx.fillRect(0, 0, 128, 128);
     return new THREE.CanvasTexture(c);
@@ -171,7 +179,7 @@
   /* ---------- Ground, highway, and center line (static, full route) ---------- */
   var ground = new THREE.Mesh(
     new THREE.PlaneGeometry(1000, 1200),
-    new THREE.MeshBasicMaterial({ color: new THREE.Color('#0b1522') })
+    new THREE.MeshBasicMaterial({ color: new THREE.Color('#0e0c1c') })
   );
   ground.rotation.x = -Math.PI / 2;
   ground.position.set(0, -0.3, -330);
@@ -826,6 +834,7 @@
     sunGlow.material.opacity = (0.2 + p * 0.4) + Math.sin(t * 0.8) * 0.04;
 
     skyMat.uniforms.top.value.lerpColors(SKY_TOP_DAWN, SKY_TOP_MORNING, p);
+    skyMat.uniforms.mid.value.lerpColors(SKY_MID_DAWN, SKY_MID_MORNING, p);
     skyMat.uniforms.horizon.value.lerpColors(SKY_HORIZON_DAWN, SKY_HORIZON_MORNING, p);
     skyMat.uniforms.band.value = 0.16 + p * 0.4;
     tmpColor.lerpColors(SKY_TOP_DAWN, SKY_TOP_MORNING, p);
