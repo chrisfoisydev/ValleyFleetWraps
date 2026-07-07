@@ -824,10 +824,12 @@
     }
 
     // Pre-dawn → sunrise → morning across the whole journey. The sun
-    // climbs out from behind the mesas, big and copper at the horizon,
-    // smaller and paler as it gains height.
-    sun.position.y = -12 + p * 54;
-    sun.scale.setScalar(1.35 - p * 0.3);
+    // climbs out from behind the mesas — big and coral at the horizon,
+    // smaller and paler as it gains height — and is fully above the
+    // ridge line (~27 units) by about three-quarters down the page.
+    var sunRise = Math.min(1, p * 1.35);
+    sun.position.y = -12 + sunRise * 78;
+    sun.scale.setScalar(1.35 - sunRise * 0.3);
     sunGlow.position.y = sun.position.y;
     sunGlow.scale.setScalar(1 + p * 0.4);
     sun.material.color.lerpColors(SUN_DAWN, SUN_MORNING, p);
