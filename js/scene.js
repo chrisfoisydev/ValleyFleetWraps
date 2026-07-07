@@ -42,23 +42,43 @@
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-  /* Palette (pre-dawn value → morning value; scroll drives the sunrise).
-     The sky is a three-band Phoenix-sunrise stack: peach-gold right at
-     the horizon, rose pink above it, violet-to-periwinkle on top. */
+  /* Palette — the scroll drives two stages: pre-dawn → peak pink sunrise
+     (first ~55% of the page), then sunrise → clear daylight. The sky is a
+     three-band stack: horizon, mid, top. */
   var SKY_TOP_DAWN = new THREE.Color('#0a0d1e');
-  var SKY_TOP_MORNING = new THREE.Color('#54619e');
+  var SKY_TOP_SUNRISE = new THREE.Color('#54619e');
+  var SKY_TOP_DAY = new THREE.Color('#5b93d8');
   var SKY_MID_DAWN = new THREE.Color('#2a1633');
-  var SKY_MID_MORNING = new THREE.Color('#e88ca6');
+  var SKY_MID_SUNRISE = new THREE.Color('#e88ca6');
+  var SKY_MID_DAY = new THREE.Color('#a5c8e8');
   var SKY_HORIZON_DAWN = new THREE.Color('#3a1c22');
-  var SKY_HORIZON_MORNING = new THREE.Color('#ffb489');
+  var SKY_HORIZON_SUNRISE = new THREE.Color('#ffb489');
+  var SKY_HORIZON_DAY = new THREE.Color('#ddeaf4');
   var SUN_DAWN = new THREE.Color('#ff8f6b');
-  var SUN_MORNING = new THREE.Color('#ffe3b8');
+  var SUN_SUNRISE = new THREE.Color('#ffe3b8');
+  var SUN_DAY = new THREE.Color('#fff6dd');
+
+  // Scroll fraction where the pink sunrise peaks and daylight takes over.
+  var SUNRISE_PEAK = 0.55;
+
+  // Lerps target through dawn → sunrise → day as p runs 0 → 1.
+  function skyStage(target, dawn, sunrise, day, p) {
+    if (p < SUNRISE_PEAK) target.lerpColors(dawn, sunrise, p / SUNRISE_PEAK);
+    else target.lerpColors(sunrise, day, (p - SUNRISE_PEAK) / (1 - SUNRISE_PEAK));
+  }
   var COPPER = new THREE.Color('#d9702e');
   var COPPER_LIGHT = new THREE.Color('#e5854a');
   var SAND = new THREE.Color('#f6f1e8');
   var MESA_FAR = new THREE.Color('#241f3d');
   var MESA_NEAR = new THREE.Color('#120e22');
   var SILHOUETTE = new THREE.Color('#201a38');
+
+  // Daylight values the landscape lifts to once the sunrise peak passes —
+  // distant ridges go hazy blue, the desert floor catches morning light.
+  var MESA_FAR_DAY = new THREE.Color('#7d92b4');
+  var MESA_NEAR_DAY = new THREE.Color('#55688c');
+  var GROUND_NIGHT = new THREE.Color('#0e0c1c');
+  var GROUND_DAY = new THREE.Color('#3a3f55');
 
   var scene = new THREE.Scene();
   scene.background = SKY_TOP_DAWN.clone();
@@ -166,15 +186,17 @@
     return mesh;
   }
 
-  backdrop.add(ridgeMesh([
+  var ridgeFar = ridgeMesh([
     [-560, 5], [-420, 6], [-350, 24], [-190, 25], [-130, 7], [-60, 6],
     [-10, 22], [150, 23], [205, 8], [280, 7], [330, 27], [460, 26], [560, 9]
-  ], MESA_FAR, -264));
+  ], MESA_FAR, -264);
+  backdrop.add(ridgeFar);
 
-  backdrop.add(ridgeMesh([
+  var ridgeNear = ridgeMesh([
     [-560, 2], [-380, 3], [-290, 13], [-215, 8], [-160, 15], [-95, 4],
     [0, 3], [90, 11], [230, 12], [300, 3], [560, 4]
-  ], MESA_NEAR, -258));
+  ], MESA_NEAR, -258);
+  backdrop.add(ridgeNear);
 
   /* ---------- Ground, highway, and center line (static, full route) ---------- */
   var ground = new THREE.Mesh(
@@ -832,16 +854,27 @@
     sun.scale.setScalar(1.35 - sunRise * 0.3);
     sunGlow.position.y = sun.position.y;
     sunGlow.scale.setScalar(1 + p * 0.4);
-    sun.material.color.lerpColors(SUN_DAWN, SUN_MORNING, p);
-    sunGlow.material.opacity = (0.2 + p * 0.4) + Math.sin(t * 0.8) * 0.04;
+    skyStage(sun.material.color, SUN_DAWN, SUN_SUNRISE, SUN_DAY, p);
 
-    skyMat.uniforms.top.value.lerpColors(SKY_TOP_DAWN, SKY_TOP_MORNING, p);
-    skyMat.uniforms.mid.value.lerpColors(SKY_MID_DAWN, SKY_MID_MORNING, p);
-    skyMat.uniforms.horizon.value.lerpColors(SKY_HORIZON_DAWN, SKY_HORIZON_MORNING, p);
-    skyMat.uniforms.band.value = 0.16 + p * 0.4;
-    tmpColor.lerpColors(SKY_TOP_DAWN, SKY_TOP_MORNING, p);
+    // The warm halo and horizon band swell to the sunrise peak, then
+    // ease off as the sky settles into plain daylight.
+    var toPeak = Math.min(p / SUNRISE_PEAK, 1);
+    var pastPeak = Math.max(0, (p - SUNRISE_PEAK) / (1 - SUNRISE_PEAK));
+    sunGlow.material.opacity = (0.2 + toPeak * 0.4 - pastPeak * 0.42) + Math.sin(t * 0.8) * 0.04;
+    skyMat.uniforms.band.value = 0.16 + toPeak * 0.4 - pastPeak * 0.5;
+
+    skyStage(skyMat.uniforms.top.value, SKY_TOP_DAWN, SKY_TOP_SUNRISE, SKY_TOP_DAY, p);
+    skyStage(skyMat.uniforms.mid.value, SKY_MID_DAWN, SKY_MID_SUNRISE, SKY_MID_DAY, p);
+    skyStage(skyMat.uniforms.horizon.value, SKY_HORIZON_DAWN, SKY_HORIZON_SUNRISE, SKY_HORIZON_DAY, p);
+    skyStage(tmpColor, SKY_TOP_DAWN, SKY_TOP_SUNRISE, SKY_TOP_DAY, p);
     scene.background.copy(tmpColor);
     scene.fog.color.copy(tmpColor);
+
+    // Once the pink peak passes, the landscape itself catches daylight:
+    // distant mesas haze toward blue, the desert floor lifts out of shadow.
+    ridgeFar.material.color.lerpColors(MESA_FAR, MESA_FAR_DAY, pastPeak);
+    ridgeNear.material.color.lerpColors(MESA_NEAR, MESA_NEAR_DAY, pastPeak);
+    ground.material.color.lerpColors(GROUND_NIGHT, GROUND_DAY, pastPeak);
 
     // The night side of the scene fades as morning arrives: stars wash
     // out, downtown windows and the Valley's sprawl lights wink off.
