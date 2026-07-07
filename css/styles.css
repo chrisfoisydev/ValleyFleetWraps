@@ -572,11 +572,32 @@ p { margin: 0 0 1em; }
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* ---------- Two-track chooser ---------- */
+/* ---------- Two-track chooser ----------
+   A visual fork: two color-coded cards separated by an "or" badge.
+   Track 1 (first wrap) is copper; Track 2 (rewrap) is steel blue. */
 .track-grid {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+.track-or {
+  justify-self: center;
+  align-self: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(217, 112, 46, 0.14);
+  border: 1px solid rgba(217, 112, 46, 0.5);
+  color: var(--copper-400);
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.9rem;
 }
 
 .track-option {
@@ -586,42 +607,55 @@ p { margin: 0 0 1em; }
   color: var(--white);
   background: rgba(14, 27, 44, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 3px solid var(--copper-500);
   border-radius: var(--radius);
-  padding: 26px 24px;
-  transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.2s ease;
+  padding: 28px 26px;
+  transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 .track-option:hover {
   transform: translateY(-3px);
-  border-color: var(--copper-500);
   background: rgba(20, 40, 63, 0.85);
+  box-shadow: 0 16px 40px rgba(4, 10, 18, 0.45);
 }
 .track-option:focus-visible { outline: 3px solid var(--copper-400); outline-offset: 2px; }
 
-.track-num {
+.track-option-alt { border-top-color: var(--steel-500); }
+
+.track-tag {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 2.6rem;
-  line-height: 1;
-  color: rgba(229, 133, 74, 0.45);
-  margin-bottom: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  color: var(--copper-400);
+  margin-bottom: 18px;
+}
+.track-option-alt .track-tag { color: #85b4c5; }
+
+.track-visual { margin-bottom: 16px; }
+.track-visual svg {
+  display: block;
+  height: 58px;
+  width: auto;
 }
 
 .track-option h3 { font-size: 1.5rem; margin-bottom: 0.3em; }
 .track-option p {
   color: rgba(255, 255, 255, 0.72);
   font-size: 0.97rem;
-  margin: 0 0 18px;
-  flex: 1;
+  margin: 0 0 16px;
 }
 
-.track-go {
-  font-family: var(--font-display);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--copper-400);
+.track-points {
+  margin-bottom: 24px;
+  flex: 1;
 }
-.track-option:hover .track-go { color: var(--copper-500); }
+.track-points li {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.track-btn { margin-top: auto; text-align: center; }
 
 .hero-fork {
   margin: -0.6rem 0 1.8rem;
@@ -1137,7 +1171,7 @@ fieldset.form-field { border: 0; padding: 0; margin-inline: 0; }
 
   .form-row { grid-template-columns: 1fr 1fr; gap: 16px; }
 
-  .track-grid { grid-template-columns: 1fr 1fr; }
+  .track-grid { grid-template-columns: 1fr auto 1fr; }
 
   .card-grid.two,
   .card-grid.three,
