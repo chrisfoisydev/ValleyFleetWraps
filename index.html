@@ -151,8 +151,20 @@
   <header class="site-header" id="site-header">
     <div class="container header-inner">
       <a href="#home" class="brand" aria-label="Valley Fleet Wraps — home">
-        <span class="brand-mark" aria-hidden="true">VF</span>
-        <span class="brand-name">Valley <strong>Fleet Wraps</strong></span>
+        <!-- Wordmark: slanted "valley" with orange v-stroke and y-tail,
+             FLEET WRAPS beneath. Inline SVG so it uses the page fonts. -->
+        <svg class="brand-logo" viewBox="0 0 232 96" aria-hidden="true" focusable="false">
+          <defs>
+            <clipPath id="logo-vstroke"><polygon points="-4,8 15,8 27,64 5,64"/></clipPath>
+            <clipPath id="logo-ytail"><rect x="118" y="61" width="52" height="35"/></clipPath>
+          </defs>
+          <g transform="translate(16 0) skewX(-12)" font-family="'Barlow Condensed','Arial Narrow',sans-serif" font-weight="800" font-size="76">
+            <text x="0" y="62" fill="#ffffff">valley</text>
+            <text x="0" y="62" fill="#d9702e" clip-path="url(#logo-vstroke)">valley</text>
+            <text x="0" y="62" fill="#d9702e" clip-path="url(#logo-ytail)">valley</text>
+          </g>
+          <text x="30" y="88" font-family="'Barlow Condensed','Arial Narrow',sans-serif" font-weight="600" font-size="20" letter-spacing="7"><tspan fill="rgba(255,255,255,0.85)">FLEET </tspan><tspan fill="#d9702e" font-weight="700">WRAPS</tspan></text>
+        </svg>
       </a>
 
       <!-- Kept deliberately sparse — every section is one scroll away, and
@@ -843,9 +855,15 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a href="#home" class="brand">
-          <span class="brand-mark" aria-hidden="true">VF</span>
-          <span class="brand-name">Valley <strong>Fleet Wraps</strong></span>
+        <a href="#home" class="brand" aria-label="Valley Fleet Wraps — home">
+          <svg class="brand-logo" viewBox="0 0 232 96" aria-hidden="true" focusable="false">
+            <g transform="translate(16 0) skewX(-12)" font-family="'Barlow Condensed','Arial Narrow',sans-serif" font-weight="800" font-size="76">
+              <text x="0" y="62" fill="#ffffff">valley</text>
+              <text x="0" y="62" fill="#d9702e" clip-path="url(#logo-vstroke)">valley</text>
+              <text x="0" y="62" fill="#d9702e" clip-path="url(#logo-ytail)">valley</text>
+            </g>
+            <text x="30" y="88" font-family="'Barlow Condensed','Arial Narrow',sans-serif" font-weight="600" font-size="20" letter-spacing="7"><tspan fill="rgba(255,255,255,0.85)">FLEET </tspan><tspan fill="#d9702e" font-weight="700">WRAPS</tspan></text>
+          </svg>
         </a>
         <p>Commercial Fleet Wraps &amp; Graphics<br>Based in Deer Valley &middot; Serving the entire Phoenix Valley</p>
         <p class="footer-tagline">Commercial wraps built for work trucks, not show cars.</p>

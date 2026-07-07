@@ -308,33 +308,17 @@ p { margin: 0 0 1em; }
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
   color: #fff;
 }
 
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: var(--copper-500);
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: #fff;
-  transform: skewX(-6deg);
+.brand-logo {
+  display: block;
+  height: 52px;
+  width: auto;
 }
 
-.brand-name {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 600;
-}
-.brand-name strong { font-weight: 800; color: var(--copper-400); }
+.footer-brand .brand-logo { height: 64px; }
 
 .main-nav {
   display: none; /* mobile: hidden until toggled */
